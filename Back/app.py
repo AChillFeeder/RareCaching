@@ -5,17 +5,23 @@
 from flask import Flask, request, redirect, flash, url_for, session
 from functools import wraps
 from models import db
+from routes.user_crud import  user_crud
 
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
-app.config.from_object('config')
+app.config.from_pyfile('config.py')
 db.init_app(app)
 
 with app.app_context():
     db.create_all()
+
+
+# Register the blueprint for user CRUD operations
+app.register_blueprint(user_crud)
+
 
 # Automatically tear down SQLAlchemy. | Bonne pratique
 # @app.teardown_request

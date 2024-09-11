@@ -11,21 +11,46 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
-    password_hash = db.Column(db.String(256), nullable=False)
+    password = db.Column(db.String(256), nullable=False)
+    nombre_offre = db.Column(db.Integer, nullable=True)
+    monnaie_virtuelle = db.Column(db.String(256), nullable=True)
 
     def __repr__(self):
         return f'<User {self.username}>'
 
 # Example Post model (replace with models you need)
-class Post(db.Model):
-    __tablename__ = 'posts'
+class Partie(db.Model):
+    __tablename__ = 'parties'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    body = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    organisateur = db.Column(db.String(256), nullable=False)
+    participants = db.Column(db.String(256), nullable=False)
 
-    user = db.relationship('User', backref=db.backref('posts', lazy=True))
+    #user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    #user = db.relationship('User', backref=db.backref('posts', lazy=True))
 
     def __repr__(self):
-        return f'<Post {self.title}>'
+        return f'<Partie {self.organisateur}>'
+
+class Coffre(db.Model):
+    __tablename__  = 'coffres'
+
+    id = db.Column(db.Integer, primary_key=True)
+    rarete = db.Column(db.String(256), nullable=False)
+    image = db.Column(db.String(256), nullable=False)
+    proprietaire = db.Column(db.String(256), nullable=False)
+    visibilite = db.Column(db.String(256), nullable=False)
+    liaison_indice = db.Column(db.String(256), nullable=False)
+
+    def __repr__(self):
+        return f'<Coffre {self.rarete}>'
+
+class Indice(db.Model):
+    __tablename__ = 'indices'
+
+    id = db.Column(db.Integer, primary_key=True)
+    liaison = db.Column(db.String(256), nullable=False)
+    text = db.Column(db.String(256), nullable=False)
+
+    def __repr__(self):
+        return f'<Indice {self.liaison}>'
