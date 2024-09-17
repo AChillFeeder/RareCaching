@@ -6,6 +6,9 @@ from flask import Flask, request, redirect, flash, url_for, session
 from functools import wraps
 from models import db
 from routes.user_crud import  user_crud
+from routes.indice_crud import  indice_crud
+from routes.coffre_crud import  coffre_crud
+from routes.partie_crud import  partie_crud
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -20,8 +23,11 @@ with app.app_context():
 
 
 # Register the blueprint for user CRUD operations
-app.register_blueprint(user_crud)
 
+app.register_blueprint(user_crud)
+app.register_blueprint(indice_crud)
+app.register_blueprint(coffre_crud)
+app.register_blueprint(partie_crud)
 
 # Automatically tear down SQLAlchemy. | Bonne pratique
 # @app.teardown_request
