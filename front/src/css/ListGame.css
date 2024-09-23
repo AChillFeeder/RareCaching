@@ -1,0 +1,29 @@
+.game-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #011b4f;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.game-container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.add-game {
+    width: 40px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.searchBar {
+    margin-right: 10px; 
+    width: 40ch;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: #cfccde;
+}
+
