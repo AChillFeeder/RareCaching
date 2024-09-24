@@ -1,0 +1,25 @@
+.historique-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+
+.coffre-img {
+    width: 50px; /* Taille de l'image */
+    height: 50px; /* Hauteur de l'image */
+    margin-right: 5px; /* Espacement entre l'image et le texte */
+}
+
+.historique-date {
+    color: #CFCCDE;
+    font-style: oblique;
+    font-size:xx-small;
+    margin-bottom: 5px; /* Espacement entre la date et le texte */
+}
+
+.historique-text {
+    color: #CFCCDE;
+    font-size: 75%;
+    margin: 0; /* Retire le margin par défaut des paragraphes */
+}

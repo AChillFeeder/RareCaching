@@ -1,0 +1,65 @@
+.alert-container {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+
+.column {
+    padding: 10px;
+}
+
+.left {
+    flex: 1.5;
+    text-align: left;
+}
+
+.right {
+    flex: 3;
+    text-align: right;
+}
+
+h2 {
+    text-align: center;
+}
+
+.title-column {
+    font-size: 20px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button {
+    width: 70%;
+    padding: 10px 20px;
+    color: #011b4f;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 10px; /* Espace entre les boutons */
+}
+
+.map {
+    background-color: #f2cfee;
+}
+
+.geo {
+    background-color: #bfbfbf;
+}
+
+
+
+
+
+
