@@ -1,0 +1,13 @@
+.description {
+    color: #CFCCDE;
+    font-size: 13px;
+    text-align: center;
+    font-style: italic;
+}
+
+.historique-container {
+    background-color: #011b4f;
+    padding: 3%;
+    border-radius: 10px;
+}
+

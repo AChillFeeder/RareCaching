@@ -1,0 +1,48 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #02163D;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-left .help-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-right .profil-icon {
+  width: 43px;
+  height: 43px;
+  cursor: pointer;
+}
+
+.header-right .market-icon {
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+h2 {
+    color: #CFCCDE;
+    margin-right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+body {
+    background-color: #02163D;
+}
+
