@@ -54,8 +54,6 @@ const Layout = ({ children }) => {
                                 <ul className="sub-menu">
                                     <li onClick={() => handleNavigation('/Dashboard')}>Créer une cache</li>
                                     <li onClick={() => handleNavigation('/Dashboard')}>Rejoindre une chasse</li>
-                                    <li onClick={() => handleNavigation('/Dashboard')}>Mode Map</li>
-                                    <li onClick={() => handleNavigation('/Dashboard')}>Mode Géo</li>
                                 </ul>
                             )}
                         </li>

@@ -1,6 +1,5 @@
 import React from 'react';
 import ItemGame from './ItemGame';
-import TextField from '@mui/material';
 import '../../css/ListGame.css';
 
 const ListGame = () => {
@@ -22,7 +21,6 @@ const ListGame = () => {
             <h2 className='title-column'>Rejoindre une chasse</h2>
             <div className='game-container'>
                 <div className='game-container-header'>
-                    <img src='/icons/add.png' className='add-game'/>
                     <input type='text' placeholder='Filtrer par référence ou par organisateur' className='searchBar'/>
                 </div>
                 {gameData.map((game, index) => (
