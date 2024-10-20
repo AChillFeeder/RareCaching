@@ -1,7 +1,7 @@
 import React from 'react';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { mapOptions } from './configurations/MapConfiguration';
-import Map from './components/Map';
+import Map from './components/MapSearch';
 import '../css/Game.css';
 
 const Game = () => {

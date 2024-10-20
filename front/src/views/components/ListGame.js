@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ItemGame from './ItemGame';
 import '../../css/ListGame.css';
 
 const ListGame = () => {
 
-    const gameData = [
+     const gameData = [
         { reference: 'ABCD', pseudo: 'Sarah', imageUrl: '/icons/nft-ex1.jpeg', accessibility: '/icons/public.png' },
         { reference: 'EFGH', pseudo: 'Aboubacar', imageUrl: '/icons/nft-ex2.jpeg', accessibility: '/icons/public.png' },
         { reference: 'IJKL', pseudo: 'Reda', imageUrl: '/icons/nft-ex3.jpeg', accessibility: '/icons/prive.png' },
@@ -14,7 +14,18 @@ const ListGame = () => {
         { reference: 'YZAB', pseudo: 'Yotsubae', imageUrl: '/icons/nft-ex7.jpeg', accessibility: '/icons/public.png' },
         { reference: 'CDEF', pseudo: 'Titou', imageUrl: '/icons/nft-ex8.jpeg', accessibility: '/icons/prive.png' }
     
-    ];
+    ]; 
+
+/*     const [gameData, setGameData] = useState([]);
+    const [filter, setFilter] = useState('');
+
+    useEffect(() => {
+        // Appel à l'API Flask pour récupérer les parties
+        fetch('http://localhost:5000/parties')
+            .then(response => response.json())
+            .then(data => setGameData(data))
+            .catch(error => console.error('Erreur:', error));
+    }, []); */
     
     return (
         <div>
@@ -27,7 +38,7 @@ const ListGame = () => {
                     <ItemGame
                     key={index}
                     reference={game.reference}
-                    pseudo={game.pseudo}
+                    pseudo={game.Organisateur}
                     imageUrl={game.imageUrl}
                     accessibility={game.accessibility}
                     />

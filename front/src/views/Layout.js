@@ -52,7 +52,7 @@ const Layout = ({ children }) => {
                             </div>
                             {activeItem === 'RareCaching' && (
                                 <ul className="sub-menu">
-                                    <li onClick={() => handleNavigation('/Dashboard')}>Créer une cache</li>
+                                    <li onClick={() => handleNavigation('/CreateGame')}>Créer une cache</li>
                                     <li onClick={() => handleNavigation('/Dashboard')}>Rejoindre une chasse</li>
                                 </ul>
                             )}
