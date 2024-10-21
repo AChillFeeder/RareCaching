@@ -57,18 +57,11 @@ const Layout = ({ children }) => {
                                 </ul>
                             )}
                         </li>
-                        <li onClick={() => handleItemClick('Profile')} className='menu-item'>
+                        <li onClick={() => handleNavigation('/Profile')} className='menu-item'>
                             <div className='menu-item-container'>
                                 <CgProfile/>
                                 <span className='menu-item-label'>Profil</span>
                             </div>
-                            {activeItem === 'Profile' && (
-                                <ul className="sub-menu">
-                                    <li onClick={() => handleNavigation('/Dashboard')}>Mes informations</li>
-                                    <li onClick={() => handleNavigation('/Dashboard')}>Liste de mes NFTs</li>
-                                    <li onClick={() => handleNavigation('/Dashboard')}>Liste de mes caches créées</li>
-                                </ul>
-                            )}
                         </li>
                         <li onClick={() => handleItemClick('Market')} className='menu-item'>
                             <div className='menu-item-container'>

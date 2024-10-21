@@ -1,7 +1,6 @@
 import { GoogleMap, Marker} from "@react-google-maps/api";
 import React, { useState, useRef, useEffect } from "react";
 import CacheMarker from '../../assets/coffre_violet2.png';
-import { useNavigate } from 'react-router-dom';
 import '../../css/MapCreate.css';
 const Map = (props) => {
     const center = {
@@ -15,7 +14,6 @@ const Map = (props) => {
     const [cachePosition, setCachePosition] = useState(center); // Position initiale du coffre
     const [isDragging, setIsDragging] = useState(false); // Gérer le drag
     
-    const navigate = useNavigate();
     const containerStyle = {
         height: '400px',
         width: '100%'
