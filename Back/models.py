@@ -1,10 +1,17 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 
-# Initialize the database instance
 db = SQLAlchemy()
 
-# Example User model
+
+
+# Table d'association Partie <-> User
+participants = db.Table('participants',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('partie_id', db.Integer, db.ForeignKey('parties.id'), primary_key=True)
+)
+
+# Utilisateurs
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
@@ -18,20 +25,18 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'<User {self.username}>'
 
-# Example Post model (replace with models you need)
 class Partie(db.Model):
     __tablename__ = 'parties'
 
     id = db.Column(db.Integer, primary_key=True)
     organisateur = db.Column(db.String(256), nullable=False)
-    participants = db.Column(db.String(256), nullable=False)
 
-    #user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    #user = db.relationship('User', backref=db.backref('posts', lazy=True))
+    participants = db.relationship('User', secondary=participants, backref='parties')
 
     def __repr__(self):
         return f'<Partie {self.organisateur}>'
-
+    
+    
 class Coffre(db.Model):
     __tablename__  = 'coffres'
 
