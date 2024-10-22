@@ -11,7 +11,6 @@ class ApiImplementation:
             'id': user.id,
             'username': user.username,
             'email': user.email,
-            'nombre_offre': user.nombre_offre,
             'monnaie_virtuelle': user.monnaie_virtuelle
         } for user in users])
     
@@ -24,7 +23,6 @@ class ApiImplementation:
             username=request.json['username'],
             email=request.json.get('email'),
             password=hashed_password,
-            nombre_offre=request.json.get('nombre_offre'),
             monnaie_virtuelle=request.json.get('monnaie_virtuelle')
         )
         db.session.add(user)
@@ -52,96 +50,46 @@ class ApiImplementation:
         parties = Partie.query.all()
         return jsonify([{
             'id': partie.id,
-            'organisateur': partie.organisateur,
-            'participants': partie.participants
+            'organisateur': {
+                'id': partie.organisateur.id,
+                'username': partie.organisateur.username,
+                'email': partie.organisateur.email
+            },
+            'collection': {
+                'id': partie.collection.id,
+                'user_id': partie.collection.user_id,
+                'card_id': partie.collection.card_id
+            } if partie.collection else None,
+            'indice': partie.indice,
+            'localisation_cache': partie.localisation_cache
         } for partie in parties])
+
     
     @staticmethod
     def create_partie():
-        if not request.json or 'organisateur' not in request.json:
-            abort(400, description="Organisateur is required")
+        if not request.json or 'organisateur_id' not in request.json or 'localisation_cache' not in request.json:
+            abort(400, description="Organisateur and localisation_cache are required fields")
+
+        organisateur = User.query.get(request.json['organisateur_id'])
+        if not organisateur:
+            abort(404, description="Organisateur not found")
+
+        collection = None
+        if 'collection_id' in request.json:
+            collection = Collection.query.get(request.json['collection_id'])
+            if not collection:
+                abort(404, description="Collection not found")
+
         partie = Partie(
-            organisateur=request.json['organisateur'],
-            participants=request.json.get('participants')
+            organisateur_id=organisateur.id,
+            localisation_cache=request.json['localisation_cache'],
+            collection_id=collection,
+            indice=request.json.get('indice', '')
         )
+
         db.session.add(partie)
         db.session.commit()
         return jsonify({'id': partie.id}), 201
-    
-    @staticmethod
-    def get_coffres():
-        coffres = Coffre.query.all()
-        return jsonify([{
-            'id': coffre.id,
-            'rarete': coffre.rarete,
-            'image': coffre.image,
-            'proprietaire': coffre.proprietaire,
-            'visibilite': coffre.visibilite,
-            'liaison_indice': coffre.liaison_indice,
-            'game_id': coffre.game_id
-        } for coffre in coffres])
-    
-    @staticmethod
-    def create_coffre():
-        if not request.json or 'rarete' not in request.json:
-            abort(400, description="Rarete is required")
-        coffre = Coffre(
-            rarete=request.json['rarete'],
-            image=request.json['image'],
-            proprietaire=request.json['proprietaire'],
-            visibilite=request.json['visibilite'],
-            liaison_indice=request.json['liaison_indice'],
-            game_id=request.json.get('game_id')
-        )
-        db.session.add(coffre)
-        db.session.commit()
-        return jsonify({'id': coffre.id}), 201
-    
-    @staticmethod
-    def get_coffres_by_game_id(game_id):
-        coffres = Coffre.query.filter_by(game_id=game_id).all()
-        return jsonify([{
-            'id': coffre.id,
-            'rarete': coffre.rarete,
-            'image': coffre.image,
-            'proprietaire': coffre.proprietaire,
-            'visibilite': coffre.visibilite,
-            'liaison_indice': coffre.liaison_indice,
-            'game_id': coffre.game_id
-        } for coffre in coffres])
-    
-    @staticmethod
-    def get_indices():
-        indices = Indice.query.all()
-        return jsonify([{
-            'id': indice.id,
-            'liaison': indice.liaison,
-            'text': indice.text,
-            'game_id': indice.game_id
-        } for indice in indices])
-    
-    @staticmethod
-    def create_indice():
-        if not request.json or 'liaison' not in request.json:
-            abort(400, description="Liaison is required")
-        indice = Indice(
-            liaison=request.json['liaison'],
-            text=request.json['text'],
-            game_id=request.json.get('game_id')
-        )
-        db.session.add(indice)
-        db.session.commit()
-        return jsonify({'id': indice.id}), 201
-    
-    @staticmethod
-    def get_indices_by_game_id(game_id):
-        indices = Indice.query.filter_by(game_id=game_id).all()
-        return jsonify([{
-            'id': indice.id,
-            'liaison': indice.liaison,
-            'text': indice.text,
-            'game_id': indice.game_id
-        } for indice in indices])
     
     @staticmethod
     def get_cards():
@@ -150,7 +98,7 @@ class ApiImplementation:
             'id': card.id,
             'name': card.name,
             'image_name': card.image_name,
-            'value': card.value,
+            'image_url': card.image_url,
             'rarity': card.rarity
         } for card in cards])
     
@@ -161,12 +109,28 @@ class ApiImplementation:
             'id': card.id,
             'name': card.name,
             'image_name': card.image_name,
-            'value': card.value,
+            'image_url': card.image_url,
             'rarity': card.rarity
         })
     
     @staticmethod
-    def get_user_cards(user_id):
+    def createCard():
+        if not request.json or 'name' not in request.json or 'rarity' not in request.json:
+            abort(400, description="Le nom ou la rarité et manquante")
+
+        carte = Card(
+            name = request.json['name'],
+            rarity = request.json['rarity'],
+            image_url = f"https://raw.communitydragon.org/14.9/game/assets/characters/{request.json['name']}/skins/base/{request.json['name']}loadscreen.png",
+            image_name = request.json.get('image_name')
+        )
+
+        db.session.add(carte)
+        db.session.commit()
+        return jsonify({'id': carte.id}), 201
+    
+    @staticmethod
+    def get_user_collection(user_id):
         collections = Collection.query.filter_by(user_id=user_id).all()
         return jsonify([{
             'id': collection.id,
@@ -174,6 +138,39 @@ class ApiImplementation:
             'card_id': collection.card_id,
             'card_name': collection.card.name,
             'card_image_name': collection.card.image_name,
-            'card_value': collection.card.value,
             'card_rarity': collection.card.rarity
         } for collection in collections])
+    
+    @staticmethod
+    def transfer_collection_ownership():
+        if not request.json or 'collection_id' not in request.json or 'new_owner' not in request.json:
+            abort(400, description="Collection ID and new owner are required")
+        collection_id = request.json['collection_id']
+        new_owner = request.json['new_owner']
+        collection = Collection.transfer_ownership(collection_id, new_owner)
+        return jsonify({
+            'id': collection.id,
+            'user_id': collection.user_id,
+            'card_id': collection.card_id
+        }), 200
+
+    @staticmethod
+    def create_user_collection():
+        if not request.json or 'user_id' not in request.json or 'card_id' not in request.json:
+            abort(400, description="User ID and Card ID are required")
+
+        user = User.query.get(request.json['user_id'])
+        if not user:
+            abort(404, description="User not found")
+
+        card = Card.query.get(request.json['card_id'])
+        if not card:
+            abort(404, description="Card not found")
+
+        new_collection = Collection(user_id=user.id, card_id=card.id)
+        db.session.add(new_collection)
+        db.session.commit()
+
+        return jsonify({'id': new_collection.id, 'user_id': new_collection.user_id, 'card_id': new_collection.card_id}), 201
+
+

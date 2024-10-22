@@ -4,3 +4,4 @@ flask-login
 bcrypt
 mysqlclient
 mysql-connector-python
+cryptography
