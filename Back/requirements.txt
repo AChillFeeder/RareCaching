@@ -1,2 +1,7 @@
 flask
 flask-sqlalchemy
+flask-login
+bcrypt
+mysqlclient
+mysql-connector-python
+cryptography

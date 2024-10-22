@@ -2,13 +2,19 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-from flask import Flask, request, redirect, flash, url_for, session
-from functools import wraps
+from flask import Flask
+# from flask import Flask, request, redirect, flash, url_for, session, jsonify, abort
+# from flask_login import login_user, logout_user
+# from functools import wraps
 from models import db
-from routes.user_crud import  user_crud
-from routes.indice_crud import  indice_crud
-from routes.coffre_crud import  coffre_crud
-from routes.partie_crud import  partie_crud
+from models import *
+# import bcrypt
+# from routes.user_crud import  user_crud
+# from routes.indice_crud import  indice_crud
+# from routes.coffre_crud import  coffre_crud
+# from routes.partie_crud import  partie_crud
+
+from apiImplementation import ApiImplementation
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -16,18 +22,10 @@ from routes.partie_crud import  partie_crud
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
-with app.app_context():
-    db.create_all()
 
-
-# Register the blueprint for user CRUD operations
-
-app.register_blueprint(user_crud)
-app.register_blueprint(indice_crud)
-app.register_blueprint(coffre_crud)
-app.register_blueprint(partie_crud)
 
 # Automatically tear down SQLAlchemy. | Bonne pratique
 # @app.teardown_request
@@ -35,51 +33,59 @@ app.register_blueprint(partie_crud)
 #     db_session.remove()
 
 
-# Login required decorator.
-
-## variable session peut-être un problème
-def login_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
-    return wrap
-
-#----------------------------------------------------------------------------#
-# Controllers.
+# User Endpoints
 #----------------------------------------------------------------------------#
 
+@app.route('/users', methods=['GET'])
+def get_users():
+    return ApiImplementation().get_users()
 
-@app.route('/')
-def home():
-    return "home"
+@app.route('/users', methods=['POST'])
+def create_user():
+    return ApiImplementation().create_user()
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
-    return "login"
+    return ApiImplementation().login()
 
-@app.route('/register')
-def register():
-    return "register"
+@app.route('/logout', methods=['POST'])
+def logout():
+    return ApiImplementation().logout()
 
-@app.route('/forgot')
-def forgot():
-    return "forgot"
+# Partie Endpoints
+@app.route('/parties', methods=['GET'])
+def get_parties():
+    return ApiImplementation().get_parties()
 
-# Error handlers.
+@app.route('/parties', methods=['POST'])
+def create_partie():
+    return ApiImplementation().create_partie()
 
-@app.errorhandler(500)
-def internal_error(error):
-    # db_session.rollback()
-    return "errors/500", 500
+# Card Endpoints
+@app.route('/cards', methods=['GET'])
+def get_cards():
+    return ApiImplementation().get_cards()
 
+@app.route('/cards/<int:card_id>', methods=['GET'])
+def get_card_by_id(card_id):
+    return ApiImplementation().get_card_by_id(card_id)
 
-@app.errorhandler(404)
-def not_found_error(error):
-    return 'errors/404', 404
+@app.route('/cards', methods=['POST'])
+def create_card():
+    return ApiImplementation().createCard()
+
+# Collection Endpoints
+@app.route('/collections/user/<int:user_id>', methods=['GET'])
+def get_user_cards(user_id):
+    return ApiImplementation().get_user_collection(user_id)
+
+@app.route('/collections/transfer', methods=['POST'])
+def transfer_collection_ownership():
+    return ApiImplementation().transfer_collection_ownership()
+
+@app.route('/collections', methods=['POST'])
+def create_user_collection():
+    return ApiImplementation().create_user_collection()
 
 
 #----------------------------------------------------------------------------#
@@ -88,6 +94,9 @@ def not_found_error(error):
 
 # Default port:
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+        print("tables created")
     app.run()
 
 # Or specify port manually:
