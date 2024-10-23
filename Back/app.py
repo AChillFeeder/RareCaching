@@ -3,6 +3,7 @@
 #----------------------------------------------------------------------------#
 
 from flask import Flask
+from flask_cors import CORS
 # from flask import Flask, request, redirect, flash, url_for, session, jsonify, abort
 # from flask_login import login_user, logout_user
 # from functools import wraps
@@ -21,6 +22,7 @@ from apiImplementation import ApiImplementation
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_pyfile('config.py')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
