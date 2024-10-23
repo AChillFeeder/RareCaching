@@ -1,18 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { mapOptions } from './configurations/MapConfiguration';
 import Map from './components/MapSearch';
+import { customGetAllFetch } from '../utils/customFetch';
+import { customGetByIdFetch } from '../utils/customFetch';
 import '../css/Game.css';
 
 const Game = () => {
 
   const { id } = useParams();
+  const [games, setGames] = useState([]);
+  const [game , setGame] = useState(null);
 
   const { isLoaded } = useJsApiLoader ({
     id: mapOptions.googleMapApiKey,
     googleMapsApiKey: mapOptions.googleMapApiKey
   })
+
+  useEffect(() => {
+    customGetAllFetch('parties').then( data =>
+      setGames(data)
+    ).then( data =>
+      console.log(data)
+    )
+  }, []);
+
+  useEffect(() => {
+    customGetByIdFetch('parties\${id}').then( data =>
+      setGame(data)
+    ).then( data =>
+      console.log(data)
+    )
+  }, []);
 
 
 
@@ -22,7 +42,7 @@ const Game = () => {
             <div className='game-details'>
               <div className='game-group-field'>
                 <p className='game-field'>Numéro de la partie :</p>
-                <p className='game-value'>12345</p>
+                <p className='game-value'>{id}</p>
               </div>
               <div className='game-group-field'>
                 <p className='game-field'>Créateur :</p>
