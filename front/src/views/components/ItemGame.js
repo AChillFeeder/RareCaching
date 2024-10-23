@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/ItemGame.css';
 
-const ItemGame = ({ reference, pseudo, imageUrl, accessibility }) => {
+const ItemGame = ({ id, pseudo}) => {
 
     const navigate = useNavigate();
     
@@ -12,12 +12,11 @@ const ItemGame = ({ reference, pseudo, imageUrl, accessibility }) => {
     
     return (
         <div className='game-item' onClick={handleGame}>
-            <span className='game-ref'>{reference}</span>
+            <span className='game-ref'>{id}</span>
             <span className='game-pseudo'>{pseudo}</span>
-            <div className='image-container'>
-                <img src={imageUrl} className='game-image'/>
-            </div>
-            <img src={accessibility} className='game-icon'/>
+            {/* <div className='image-container'>
+                <img src={accessibility} className='game-icon'/>
+            </div> */}
         </div>
     );
 };

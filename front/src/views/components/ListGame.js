@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ItemGame from './ItemGame';
 import '../../css/ListGame.css';
-import { customFetch } from '../utils/customFetch';
+import { customFetch, customGetAllFetch, customGetByIdFetch } from '../../utils/customFetch';
 
 const ListGame = () => {
 
@@ -23,15 +23,14 @@ const ListGame = () => {
     const [parties, setParties] = useState([]);
     const [loading, setLoading] = useState(true);  
 
-    
-
     useEffect(() => {
-         customFetch('parties').then( data =>
+         customGetAllFetch('parties').then( data =>
             setParties(data)
         ).then( data =>
             console.log(data)
         )
     }, []);
+
     
     return (
         <div>
@@ -40,10 +39,13 @@ const ListGame = () => {
                 <div className='game-container-header'>
                     <input type='text' placeholder='Filtrer par référence ou par organisateur' className='searchBar'/>
                 </div>
-                {parties.map((game, index) => (
-                    <div style={{color: "white"}}>
-                        {game.indice}
-                    </div>
+                {parties && parties.map((partie, index) => (
+
+                    <ItemGame 
+                        key={index}
+                        id={partie.id}
+                        pseudo={partie.organisateur.username}
+                        rarity='commun'/>
                 
                 ))}
             </div>
