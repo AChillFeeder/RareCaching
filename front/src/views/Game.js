@@ -1,10 +1,13 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { mapOptions } from './configurations/MapConfiguration';
 import Map from './components/MapSearch';
 import '../css/Game.css';
 
 const Game = () => {
+
+  const { id } = useParams();
 
   const { isLoaded } = useJsApiLoader ({
     id: mapOptions.googleMapApiKey,

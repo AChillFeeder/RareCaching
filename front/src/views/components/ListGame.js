@@ -42,6 +42,7 @@ const ListGame = () => {
                 {parties.length > 0 ? (
                     parties.map((partie, index) => (
                         <ItemGame
+                            key={index}
                             id={partie.id}
                             pseudo={partie.organisateur.username}
                             rarity={partie.collection.card.rarity}

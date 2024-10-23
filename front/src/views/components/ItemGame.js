@@ -12,8 +12,8 @@ const ItemGame = ({ id, pseudo, rarity }) => {
 
     const navigate = useNavigate();
     
-    const handleGame= () => {
-        navigate('/Game');
+    const handleGame= (id) => {
+        navigate('/Game/${id}');
     }
 
     const getRarityImage = () => {
@@ -47,7 +47,7 @@ const ItemGame = ({ id, pseudo, rarity }) => {
     }
     
     return (
-        <div className='game-item' onClick={handleGame}>
+        <div className='game-item' onClick={() => handleGame(id)}>
             <span className='game-ref'>{id}</span>
             <span className='game-pseudo'>{pseudo}</span>
             <span>{getRarityLabel()}</span>
