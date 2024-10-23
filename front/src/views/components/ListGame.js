@@ -25,11 +25,13 @@ const ListGame = () => {
 
     useEffect(() => {
          customGetAllFetch('parties').then( data =>
+         customGetAllFetch('parties').then( data =>
             setParties(data)
         ).then( data =>
             console.log(data)
         )
     }, []);
+
     
     return (
         <div>

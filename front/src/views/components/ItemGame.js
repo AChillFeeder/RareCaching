@@ -49,6 +49,7 @@ const ItemGame = ({ id, pseudo, rarity }) => {
     return (
         <div className='game-item' onClick={handleGame}>
             <span className='game-ref'>{id}</span>
+            <span className='game-ref'>{id}</span>
             <span className='game-pseudo'>{pseudo}</span>
             <span>{getRarityLabel()}</span>
             <img src={getRarityImage()} className='coffre-img'/>
