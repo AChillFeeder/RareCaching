@@ -40,11 +40,10 @@ const ListGame = () => {
                 <div className='game-container-header'>
                     <input type='text' placeholder='Filtrer par référence ou par organisateur' className='searchBar'/>
                 </div>
-                {parties.map((game, index) => (
-                    <div style={{color: "white"}}>
+                {parties && parties.length > 0 && parties.map((game, index) => (
+                    <div key={index} style={{color: "white"}}>
                         {game.indice}
-                    </div>
-                
+                    </div> 
                 ))}
             </div>
         </div>

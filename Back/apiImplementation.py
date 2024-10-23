@@ -45,6 +45,7 @@ class ApiImplementation:
         logout_user()
         return jsonify({'message': 'Logout successful'}), 200
     
+    # Get Parties Endpoint
     @staticmethod
     def get_parties():
         parties = Partie.query.all()
@@ -58,7 +59,13 @@ class ApiImplementation:
             'collection': {
                 'id': partie.collection.id,
                 'user_id': partie.collection.user_id,
-                'card_id': partie.collection.card_id
+                'card': {
+                    'id': partie.collection.card.id,
+                    'name': partie.collection.card.name,
+                    'image_name': partie.collection.card.image_name,
+                    'image_url': partie.collection.card.image_url,
+                    'rarity': partie.collection.card.rarity
+                }
             } if partie.collection else None,
             'indice': partie.indice,
             'localisation_cache': partie.localisation_cache
