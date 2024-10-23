@@ -145,7 +145,8 @@ class ApiImplementation:
             'card_id': collection.card_id,
             'card_name': collection.card.name,
             'card_image_name': collection.card.image_name,
-            'card_rarity': collection.card.rarity
+            'card_rarity': collection.card.rarity,
+            'card_imageUrl': collection.card.image_url
         } for collection in collections])
     
     @staticmethod
@@ -180,4 +181,31 @@ class ApiImplementation:
 
         return jsonify({'id': new_collection.id, 'user_id': new_collection.user_id, 'card_id': new_collection.card_id}), 201
 
-
+    @staticmethod
+    def get_partie_by_id(partie_id):
+        partie = Partie.query.get(partie_id)
+        
+        if not partie:
+            return jsonify({"error": "Partie not found"}), 404
+        
+        return jsonify({
+            'id': partie.id,
+            'organisateur': {
+                'id': partie.organisateur.id,
+                'username': partie.organisateur.username,
+                'email': partie.organisateur.email
+            },
+            'localisation_cache': partie.localisation_cache,
+            'indice': partie.indice,
+            'card': {
+                'id': partie.collection.card.id,
+                'name': partie.collection.card.name,
+                'image_name': partie.collection.card.image_name,
+                'image_url': partie.collection.card.image_url,
+                'rarity': partie.collection.card.rarity
+            } if partie.collection else None,
+            'collection': {
+                'id': partie.collection.id,
+                'user_id': partie.collection.user_id
+            } if partie.collection else None
+        })

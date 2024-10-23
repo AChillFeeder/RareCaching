@@ -89,6 +89,9 @@ def transfer_collection_ownership():
 def create_user_collection():
     return ApiImplementation().create_user_collection()
 
+@app.route('/parties/<int:partie_id>', methods=['GET'])
+def get_parties_by_id(partie_id):
+    return ApiImplementation().get_partie_by_id(partie_id)
 
 #----------------------------------------------------------------------------#
 # Launch.
