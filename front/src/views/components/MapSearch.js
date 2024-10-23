@@ -1,6 +1,6 @@
 import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
 import React, { useState, useRef, useEffect } from "react";
-import CacheMarker from '../../assets/coffre_violet2.png';
+import CacheMarker from '../../assets/coffres/coffre_violet2.png';
 import { useNavigate } from 'react-router-dom';
 import '../../css/MapSearch.css';
 const Map = (props) => {

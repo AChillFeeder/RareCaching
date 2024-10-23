@@ -8,51 +8,12 @@
     padding: 10px
 }
 
-/* Style pour les colonnes internes */
-.game-ref{
-    flex: 1; 
-    text-align: left;
-    padding: 10px;
+span {
     color: #cfccde;
 }
 
-.game-pseudo{
-    flex: 1; 
-    text-align: left;
-    padding: 10px;
-    color: #cfccde;
+.coffre-img {
+    max-width: 50px;
 }
-
-.image-container {
-    flex: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Image */
-.game-image {
-    width: 100%;
-    max-width: 75px;
-}
-
-/* Bouton */
-.game-button {
-    margin-left: 10px;
-    padding: 10px 10px;
-    color: #011b4f;
-    background-color: #cfccde;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 13px;
-}
-
-/* Icône */
-.game-icon {
-    max-width: 35px;
-    height: auto;
-    object-fit: cover;
-    padding: 10px
-}
+ 
 

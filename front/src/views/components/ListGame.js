@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ItemGame from './ItemGame';
 import '../../css/ListGame.css';
-import { customFetch } from '../utils/customFetch';
+import { customGetAllFetch } from '../utils/customFetch';
 
 const ListGame = () => {
 
@@ -23,10 +23,8 @@ const ListGame = () => {
     const [parties, setParties] = useState([]);
     const [loading, setLoading] = useState(true);  
 
-    
-
     useEffect(() => {
-         customFetch('parties').then( data =>
+         customGetAllFetch('parties').then( data =>
             setParties(data)
         ).then( data =>
             console.log(data)
@@ -40,11 +38,17 @@ const ListGame = () => {
                 <div className='game-container-header'>
                     <input type='text' placeholder='Filtrer par référence ou par organisateur' className='searchBar'/>
                 </div>
-                {parties && parties.length > 0 && parties.map((game, index) => (
-                    <div key={index} style={{color: "white"}}>
-                        {game.indice}
-                    </div> 
-                ))}
+                {parties.length > 0 ? (
+                    parties.map((partie, index) => (
+                        <ItemGame
+                            id={partie.id}
+                            pseudo={partie.organisateur.username}
+                            rarity={partie.collection.card.rarity}
+                        />
+                    ))
+                ) : (
+                    <div className='text'>Aucune partie disponible.</div> 
+                )}
             </div>
         </div>
     ); 
