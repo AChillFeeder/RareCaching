@@ -5,7 +5,6 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
-import { customGetAllFetch } from './utils/customFetch';
 import '../css/Profile.css';
 import { customFetch } from './utils/customFetch';
 
@@ -124,10 +123,6 @@ const Profile = () => {
                                         </div>
                                             <button>Créer un cache</button>
                                     </div>
-                                    {/* <small>{champion.rarity}</small> */}
-                                    {/* <Tooltip title="Créer une cache" arrow>
-                                        <button className="create-btn" onClick={handleBtnClick}>+</button>
-                                    </Tooltip> */}
                                 </Box>
                             </div>
 

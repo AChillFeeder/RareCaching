@@ -1,4 +1,4 @@
-export async function customGetAllFetch(endpoint) {
+export async function customFetch(endpoint) {
     try {
       const response = await fetch(`http://localhost:5000/${endpoint}`);  
       if (response.ok) {
