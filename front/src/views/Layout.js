@@ -13,19 +13,10 @@ const Layout = ({ children }) => {
     const navigate = useNavigate();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [activeItem, setActiveItem] = useState(false);
 
     const handleNavigation = (path) => {
         navigate(path);
         setIsMenuOpen(false);
-    };
-
-    const handleItemClick = (item) => {
-        if (activeItem === item) {
-            setActiveItem(null);
-        } else {
-            setActiveItem(item);
-        }
     };
 
     const toggleMenu = () => {
@@ -45,17 +36,11 @@ const Layout = ({ children }) => {
 
                 <div className={`side-menu ${isMenuOpen ? 'open' : ''}`}>
                     <ul>
-                        <li onClick={() => handleItemClick('RareCaching')} className='menu-item'>
+                        <li onClick={() => handleNavigation('/Dashboard')} className='menu-item'>
                             <div className='menu-item-container'>
                                 <IoGameControllerOutline/>
-                                <span className='menu-item-label'>RareCaching</span>
+                                <span className='menu-item-label'>Rejoindre une chasse</span>
                             </div>
-                            {activeItem === 'RareCaching' && (
-                                <ul className="sub-menu">
-                                    <li onClick={() => handleNavigation('/CreateGame')}>Créer une cache</li>
-                                    <li onClick={() => handleNavigation('/Dashboard')}>Rejoindre une chasse</li>
-                                </ul>
-                            )}
                         </li>
                         <li onClick={() => handleNavigation('/Profile')} className='menu-item'>
                             <div className='menu-item-container'>
@@ -63,22 +48,22 @@ const Layout = ({ children }) => {
                                 <span className='menu-item-label'>Profil</span>
                             </div>
                         </li>
-                        <li onClick={() => handleItemClick('Market')} className='menu-item'>
+                        <li className='menu-item'>
                             <div className='menu-item-container'>
                                 <PiBasketBold/>
                                 <span className='menu-item-label'>Marché</span>
                             </div>
                         </li>
-                        <li onClick={() => handleItemClick('Information')} className='menu-item'>
+                        <li className='menu-item'>
                             <div className='menu-item-container'>
                                 <HiOutlineInformationCircle/>
-                                <span className='menu-item-label'>En savoir plus</span>
+                                <span className='menu-item-label'>Règles du jeu</span>
                             </div>
                         </li>
-                        <li onClick={() => handleItemClick('Logout')} className='menu-item'>
+                        <li  className='menu-item'>
                             <div className='menu-item-container logout' >
                                 <TbLogout/>
-                                <span className='menu-item-label'>Déconnexion</span>
+                                <span className='menu-item-label logout'>Déconnexion</span>
                             </div>
                         </li>
 
