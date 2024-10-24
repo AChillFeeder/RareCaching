@@ -1,23 +1,30 @@
 import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
 import React, { useState, useRef, useEffect } from "react";
 import CacheMarker from '../../assets/coffres/coffre_violet2.png';
+import coffreCommun from '../../assets/coffres/coffreCommun.png';
+import coffreRare from '../../assets/coffres/coffreRare.png';
+import coffreTresRare from '../../assets/coffres/coffreTresRare.png';
+import coffreExceptionnelle from '../../assets/coffres/coffreExceptionnelle.png';
+import coffreUnique from '../../assets/coffres/coffreUnique.png';
 import { useNavigate } from 'react-router-dom';
+import ConfettiExplosion from 'react-confetti-explosion';
 import '../../css/MapSearch.css';
-const Map = (props) => {
+const Map = ({ isLoaded, game}) => {
     const center = {
         lat: 47.2184,
         lng: -1.5536
     };
 
-    const { isLoaded } = props;
     const [circleOptions, setCircleOptions] = useState({ center: null, radius: 0, strokeColor: '', fillColor: '' });
     const [isCacheOpen, setIsCacheOpen] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
-    const [zoom, setZoom] = useState(10); // Ajout de l'état pour le niveau de zoom
+    const [zoom, setZoom] = useState(10);
     const [showMarker, setShowMarker] = useState(false);
     const [mapCenter, setMapCenter] = useState(center);
     const [circleCounter, setCircleCounter] = useState(-1);
     const [circleInitialized, setCircleInitialized] = useState(false);
+    const [cacheMarker, setCacheMarker] = useState({ lat: null, lng: null});
+    const [isExploding, setIsExploding] = useState(false);
 
     const navigate = useNavigate();
     const containerStyle = {
@@ -25,14 +32,25 @@ const Map = (props) => {
         width: '100%'
     };
 
-    const cacheMarker = {
-        lat: 47.20815,
-        lng: -1.56579
-    };
+    const getCacheImage = () => {
+        switch (game.collection.card.rarity) {
+            case 'commune':
+                return coffreCommun;
+            case 'rare':
+                return coffreRare; 
+            case 'tres rare':
+                return coffreTresRare; 
+            case 'exceptionnelle':
+                return coffreExceptionnelle;
+            case 'unique':
+                return coffreUnique;
+        }
+    }
 
     const handleCacheClick = () => {
         setIsCacheOpen(true);
         setShowPopup(true);
+        setIsExploding(true);
     };
 
     const handleClosePopup = () => {
@@ -65,7 +83,7 @@ const Map = (props) => {
             setZoom(currentZoom);
 
             // Show marker if zoom level is greater than or equal to 15
-            if (currentZoom >= 15) {
+            if (currentZoom >= 19) {
                 setShowMarker(true);
             } else {
                 setShowMarker(false);
@@ -79,6 +97,19 @@ const Map = (props) => {
             map.addListener("zoom_changed", handleZoomChanged); // Listen for zoom changes
         }
     }, []);
+
+    useEffect(() => {
+        if (game.localisation_cache) {
+            const [lat, lng] = game.localisation_cache.split(',').map(coord => parseFloat(coord.trim()));
+            setCacheMarker({ lat, lng});
+        }
+    }, [game.localisation_cache]);
+
+    useEffect(() => {
+        if (cacheMarker.lat && cacheMarker.lng) {
+            console.log(`CacheMarker Location: Latitude: ${cacheMarker.lat}, Longitude: ${cacheMarker.lng}`);
+        }
+    }, [cacheMarker]);
 
     const handleOnIdle = () => {
         const lat = mapRef.current.getCenter().lat();
@@ -158,7 +189,9 @@ const Map = (props) => {
                         <Marker
                             position={cacheMarker}
                             options={{
-                                icon: CacheMarker
+                                icon: {
+                                    url: getCacheImage()
+                                }
                             }}
                             onClick={handleCacheClick} // Handle marker click
                         />
@@ -185,7 +218,19 @@ const Map = (props) => {
             {showPopup && (
                 <div className="popup-cart-find">
                     <span onClick={handleClosePopup}>&times;</span>
-                    <img src='/icons/nft-ex1.jpeg' alt="Popup" />
+                    <p className="text-popup">Félicitation ! Vous avez trouvé la carte Ahri !</p>
+                    <p className="text-popup">La carte a été ajoutée à votre collection.</p>
+                    <img src={game.collection.card.image_url} alt="Popup" />
+{/*                     <div className="explosion">
+                        {isExploding && typeof window !== 'undefined' && (
+                            <ConfettiExplosion 
+                                force={0.8}
+                                duration={3000}
+                                particleCount={250}
+                                width={1600}
+                            />
+                        )}
+                    </div> */}
                 </div>
             )}
         </div>

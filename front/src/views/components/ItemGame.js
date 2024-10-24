@@ -8,16 +8,16 @@ import coffreExceptionnelle from '../../assets/coffres/coffreExceptionnelle.png'
 import coffreUnique from '../../assets/coffres/coffreUnique.png';
 
 
-const ItemGame = ({ id, pseudo, rarity }) => {
+const ItemGame = ({ game }) => {
 
     const navigate = useNavigate();
     
-    const handleGame= (id) => {
-        navigate('/Game/${id}');
+    const handleGame= (game) => {
+        navigate(`/Game/${game}`, { state: { game } });
     }
 
     const getRarityImage = () => {
-        switch (rarity) {
+        switch (game.collection.card.rarity) {
             case 'commune':
                 return coffreCommun;
             case 'rare':
@@ -32,7 +32,7 @@ const ItemGame = ({ id, pseudo, rarity }) => {
     }
 
     const getRarityLabel = () => {
-        switch (rarity) {
+        switch (game.collection.card.rarity) {
             case 'commune':
                 return 'Commune 70%';
             case 'rare':
@@ -47,9 +47,9 @@ const ItemGame = ({ id, pseudo, rarity }) => {
     }
     
     return (
-        <div className='game-item' onClick={() => handleGame(id)}>
-            <span className='game-ref'>{id}</span>
-            <span className='game-pseudo'>{pseudo}</span>
+        <div className='game-item' onClick={() => handleGame(game)}>
+            <span className='game-ref'>{game.id}</span>
+            <span className='game-pseudo'>{game.organisateur.username}</span>
             <span>{getRarityLabel()}</span>
             <img src={getRarityImage()} className='coffre-img'/>
 
