@@ -5,27 +5,12 @@ import { customGetAllFetch } from '../utils/customFetch';
 
 const ListGame = () => {
 
-    //  const gameData = [
-    //     { reference: 'ABCD', pseudo: 'Sarah', imageUrl: '/icons/nft-ex1.jpeg', accessibility: '/icons/public.png' },
-    //     { reference: 'EFGH', pseudo: 'Aboubacar', imageUrl: '/icons/nft-ex2.jpeg', accessibility: '/icons/public.png' },
-    //     { reference: 'IJKL', pseudo: 'Reda', imageUrl: '/icons/nft-ex3.jpeg', accessibility: '/icons/prive.png' },
-    //     { reference: 'MNOP', pseudo: 'Romaric', imageUrl: '/icons/nft-ex4.jpeg', accessibility: '/icons/public.png' },
-    //     { reference: 'QRST', pseudo: 'Jonkox', imageUrl: '/icons/nft-ex5.jpeg', accessibility: '/icons/prive.png' },
-    //     { reference: 'UVWX', pseudo: 'Alcatraz', imageUrl: '/icons/nft-ex6.jpeg', accessibility: '/icons/public.png' },
-    //     { reference: 'YZAB', pseudo: 'Yotsubae', imageUrl: '/icons/nft-ex7.jpeg', accessibility: '/icons/public.png' },
-    //     { reference: 'CDEF', pseudo: 'Titou', imageUrl: '/icons/nft-ex8.jpeg', accessibility: '/icons/prive.png' }
-    
-    // ]; 
-
-    // const [gameData, setGameData] = useState([]);
-    // const [filter, setFilter] = useState('');
-
-    const [parties, setParties] = useState([]);
+    const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);  
 
     useEffect(() => {
          customGetAllFetch('parties').then( data =>
-            setParties(data)
+            setGames(data)
         ).then( data =>
             console.log(data)
         )
@@ -39,13 +24,11 @@ const ListGame = () => {
                 <div className='game-container-header'>
                     <input type='text' placeholder='Filtrer par référence ou par organisateur' className='searchBar'/>
                 </div>
-                {parties.length > 0 ? (
-                    parties.map((partie, index) => (
+                {games && games.length > 0 ? (
+                    games.map((game, index) => (
                         <ItemGame
                             key={index}
-                            id={partie.id}
-                            pseudo={partie.organisateur.username}
-                            rarity={partie.collection.card.rarity}
+                            game={game}
                         />
                     ))
                 ) : (

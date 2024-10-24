@@ -1,40 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { mapOptions } from './configurations/MapConfiguration';
 import Map from './components/MapSearch';
-import { customGetAllFetch } from '../utils/customFetch';
-import { customGetByIdFetch } from '../utils/customFetch';
 import '../css/Game.css';
 
 const Game = () => {
 
-  const { id } = useParams();
-  const [games, setGames] = useState([]);
-  const [game , setGame] = useState(null);
+  const location = useLocation();
+  const game = location.state?.game;
 
   const { isLoaded } = useJsApiLoader ({
     id: mapOptions.googleMapApiKey,
     googleMapsApiKey: mapOptions.googleMapApiKey
   })
-
-  useEffect(() => {
-    customGetAllFetch('parties').then( data =>
-      setGames(data)
-    ).then( data =>
-      console.log(data)
-    )
-  }, []);
-
-  useEffect(() => {
-    customGetByIdFetch('parties\${id}').then( data =>
-      setGame(data)
-    ).then( data =>
-      console.log(data)
-    )
-  }, []);
-
-
 
     return (
         <div className='game-container'>
@@ -42,28 +21,29 @@ const Game = () => {
             <div className='game-details'>
               <div className='game-group-field'>
                 <p className='game-field'>Numéro de la partie :</p>
-                <p className='game-value'>{id}</p>
+                <p className='game-value'>{game.id}</p>
               </div>
               <div className='game-group-field'>
                 <p className='game-field'>Créateur :</p>
-                <p className='game-value'>Jonkox</p>
+                <p className='game-value'>{game.organisateur.username}</p>
               </div>
-              <div className='game-group-field'>
+{/*               <div className='game-group-field'>
                 <p className='game-field'>Date de création :</p>
                 <p className='game-value'>07/10/2024</p>
-              </div>
+              </div> */}
               <div className='game-group-field'>
-                <p className='game-field'>Rareté du cache :</p>
-                <p className='game-value'>Légendaire</p>
+                <p className='game-field'>Rareté :</p>
+                <p className='game-value'>{game.collection.card.rarity}</p>
               </div>
             </div>
             <div className='body-container'>
               <div className='map-container'>
-                <Map isLoaded={isLoaded}/>
+                <Map 
+                  isLoaded={isLoaded}
+                  game={game}/>
               </div>
               <div className='indices-container'>
-                <p className='indices'>La où les petits poissons dansent</p>
-                <p className='indices'>On se sent en Afrique</p>
+                <p className='indices'>{game.indice}</p>
               </div>
             </div>
         </div>
