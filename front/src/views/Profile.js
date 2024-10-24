@@ -3,10 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Grid from '@mui/material/Grid';
-import Tooltip from '@mui/material/Tooltip';
 import '../css/Profile.css';
-import { customFetch } from './utils/customFetch';
+import { customGetAllFetch } from './utils/customFetch';
 
 
 // const generateChampionCollection = (champions) => {
@@ -24,7 +22,7 @@ const Profile = () => {
     const [cards, setCards] = useState([]);
 
     useEffect(() => {
-        customFetch('cards').then( data =>
+        customGetAllFetch('cards').then( data =>
         setCards(data)
     ).then( data =>
         console.log(data)
@@ -66,8 +64,8 @@ const Profile = () => {
         };
     }, []);
 
-    const handleBtnClick = () => {
-        navigate('/CreateGame');
+    const handleBtnClick = (champion) => {
+        navigate('/CreateGame', { state: { champion } });
     };
 
 
@@ -121,7 +119,7 @@ const Profile = () => {
                                             <img src={champion.image_url.replace(/'/g, "").replace(/ /g, "").replace('skins/base', 'hud').replace('loadscreen', '_circle')}/>
                                             <p>{`${champion.name}`}</p>
                                         </div>
-                                            <button>Créer un cache</button>
+                                            <button onClick={() => handleBtnClick(champion)}>Créer un cache</button>
                                     </div>
                                 </Box>
                             </div>

@@ -26,9 +26,43 @@
   padding-bottom: 10px;
 }
 
-img {
-  padding: 10px;
-  border-radius: 10%;
+.champion-card {
+  /* margin-bottom: 25px ; */
+  margin: 0;
+  /* text-align: center; */
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  font-weight: bold;
+  letter-spacing: 8px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hover {
+  display: none;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.hover p {
+  align-self: flex-end;
+  text-align: center;
+}
+
+.hover img {
+  width: 150px;
+  height: 150px;
+}
+.champion-container:hover .hover {
+  display: flex;
+  flex-direction: column;
+}
+.champion-container:hover .default {
+  display: none;
 }
 
 .input-container{

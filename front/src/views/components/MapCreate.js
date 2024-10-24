@@ -2,13 +2,12 @@ import { GoogleMap, Marker} from "@react-google-maps/api";
 import React, { useState, useRef, useEffect } from "react";
 import CacheMarker from '../../assets/coffres/coffre_violet2.png';
 import '../../css/MapCreate.css';
-const Map = (props) => {
+const Map = ({ isLoaded, onMarkerDragEnd }) => {
     const center = {
         lat: 47.2184,
         lng: -1.5536
     };
 
-    const { isLoaded } = props;
     const [zoom, setZoom] = useState(10); // Ajout de l'état pour le niveau de zoom
     const [mapCenter, setMapCenter] = useState(center);
     const [cachePosition, setCachePosition] = useState(center); // Position initiale du coffre
@@ -30,6 +29,7 @@ const Map = (props) => {
             lng: event.latLng.lng()
         };
         setCachePosition(newPosition); // Met à jour la position du coffre
+        onMarkerDragEnd(cachePosition);
     };
 
     return isLoaded && (

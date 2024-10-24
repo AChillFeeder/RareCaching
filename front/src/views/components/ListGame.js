@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ItemGame from './ItemGame';
 import '../../css/ListGame.css';
-import { customFetch } from '../utils/customFetch';
+import { customGetAllFetch } from '../utils/customFetch';
 
 const ListGame = () => {
 
