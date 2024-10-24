@@ -1,6 +1,6 @@
 import { GoogleMap, Marker} from "@react-google-maps/api";
 import React, { useState, useRef, useEffect } from "react";
-import CacheMarker from '../../assets/coffre_violet2.png';
+import CacheMarker from '../../assets/coffres/coffre_violet2.png';
 import '../../css/MapCreate.css';
 const Map = (props) => {
     const center = {

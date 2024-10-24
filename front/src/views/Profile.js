@@ -5,20 +5,20 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 import Tooltip from '@mui/material/Tooltip';
+import { customGetAllFetch } from './utils/customFetch';
 import '../css/Profile.css';
 import { customFetch } from './utils/customFetch';
 
 
+// const generateChampionCollection = (champions) => {
+//     const championsArray = Array(100).fill(null); // Tableau de 100 éléments
 
-const generateChampionCollection = (champions) => {
-    const championsArray = Array(100).fill(null); // Tableau de 100 éléments
+//     champions.forEach((champion) => {
+//         championsArray[champion.id - 1] = champion; // Placer chaque champion à sa position (id-1)
+//     });
 
-    champions.forEach((champion) => {
-        championsArray[champion.id - 1] = champion; // Placer chaque champion à sa position (id-1)
-    });
-
-    return championsArray;
-};
+//     return championsArray;
+// };
 
 const Profile = () => {
 
@@ -111,6 +111,7 @@ const Profile = () => {
 
             {value === 0 && (
                 <Box className="collection-container" sx={{ padding: '20px' }}>
+
                     <div className='all-cards-container'>
                         {cards.map((champion, index) => (
                             <div className='champion-container' style={{ backgroundImage: `url(${champion.image_url.replace(/'/g, "").replace(/ /g, "")})`, borderColor: `${colorRarityMap[champion.rarity]}` }}>
@@ -129,6 +130,7 @@ const Profile = () => {
                                     </Tooltip> */}
                                 </Box>
                             </div>
+
                         ))}
                     </div>
                 </Box>
