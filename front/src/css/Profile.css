@@ -8,7 +8,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 0.5 rem;
-    color: #CFCCDE;
+    color: #2e2e2e;
     background-color: #4e6491;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -16,13 +16,7 @@
     padding: 10px;
 }
 
-@media (max-width: 600px) {
-    .profile-details {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0rem;
-    }
-}
+
 
 .image-gallery {
     display: flex;
@@ -40,30 +34,141 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 600px) {
-    .champion-image {
-        width: 100px;
-        height: 100px;
-    }
-}
+
 
 .text-empty {
     color: #4e6491;
 }
 
-.create-btn{
+/* .create-btn{
     width:40px;
     height:40px;
     border-radius: 50%;
-    border:none;
-    background-color:#02163D;
-    color: white;
-    font-weight: bolder;
+    border: 4px solid rgb(255, 255, 255);
+    background-color:#0000003a;
+    color: rgb(255, 255, 255);
     font-size: larger;
-    margin-left: 10px;  
     cursor: pointer;
-    box-shadow: 0px 5px 10px rgba(11, 10, 10, 0.3);
     transition: 0.3s;
-    margin-top: 10px;
-  }
+    position: absolute;
+    top: 15px;
+    right: 15px;
+} */
 
+.create-btn:hover {
+    background-color: #2e2e2e;
+}
+
+
+
+
+.all-cards-container {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+.champion-container {
+    box-shadow: rgba(255, 255, 255, 0.3) 0 5vw 6vw -8vw, rgba(255, 255, 255, 0) 0 4.5vw 5vw -6vw, rgba(50, 50, 80, 0.5) 0px 4vw 8vw -2vw, rgba(0, 0, 0, 0.8) 0px 4vw 5vw -3vw;
+    background: white;
+    color: white;
+    border: 4px solid white;
+    padding: 10px;
+    height: 450px;
+    min-width: 250px;
+
+    display: flex;
+
+    background-size: cover; /* Ensure the image covers the container */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    position: relative; /* Allow positioning of child elements */
+}
+.champion-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.3) 70%, rgba(0, 0, 0, 0.8) 90%);
+    z-index: 1;
+    border-radius: 10px; /* Match the container's radius */
+    backdrop-filter: blur(0px); /* No blur by default */
+}
+.champion-container:hover {
+    /* cursor: pointer; */
+}
+.champion-container:hover::before {
+    backdrop-filter: blur(5px); 
+}
+
+/* backdrop-filter: sepia(100%);  */
+
+.champion-card {
+    /* margin-bottom: 25px ; */
+    margin: 0;
+    /* text-align: center; */
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    font-weight: bold;
+    letter-spacing: 8px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hover {
+    display: none;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+.hover p {
+    align-self: flex-end;
+    text-align: center;
+}
+.hover button{
+    background: none;
+    border: 4px solid white;
+    color: white;
+    padding: 10px;
+    width: 90%;
+    margin-bottom: 5px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+.hover button:hover {
+    cursor: pointer;
+}
+.hover img {
+    width: 150px;
+    height: 150px;
+}
+.champion-container:hover .hover {
+    display: flex;
+    flex-direction: column;
+}
+.champion-container:hover .default {
+    display: none;
+}
+
+
+@media (max-width: 600px) {
+    .profile-details {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0rem;
+    }
+
+    .champion-image {
+        width: 100px;
+        height: 100px;
+    }
+}
