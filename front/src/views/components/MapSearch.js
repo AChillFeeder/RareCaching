@@ -24,7 +24,7 @@ const Map = ({ isLoaded, game}) => {
     const [circleCounter, setCircleCounter] = useState(-1);
     const [circleInitialized, setCircleInitialized] = useState(false);
     const [cacheMarker, setCacheMarker] = useState({ lat: null, lng: null});
-    const [isExploding, setIsExploding] = useState(false);
+    const [isExploding, setIsExploding] = useState(true);
 
     const navigate = useNavigate();
     const containerStyle = {
@@ -45,6 +45,14 @@ const Map = ({ isLoaded, game}) => {
             case 'unique':
                 return coffreUnique;
         }
+    }
+
+    const colorRarityMap = {
+        "commune": "green",
+        "rare": "blue",
+        "exceptionnelle": "violet",
+        "unique": "black",
+        "tres rare": "red",
     }
 
     const handleCacheClick = () => {
@@ -198,39 +206,18 @@ const Map = ({ isLoaded, game}) => {
                     )}
                 </div>
 
-                {/* Only draw the circle after it has been initialized */}
-                {circleOptions.center && (
-                    <Circle
-                        center={circleOptions.center} // Dynamic center
-                        onLoad={() => setCircleCounter(circleCounter + 1)}
-                        options={{
-                            strokeColor: circleOptions.strokeColor,
-                            fillColor: circleOptions.fillColor,
-                            fillOpacity: 0.3 * circleCounter,
-                            strokeOpacity: 1,
-                            strokeWeight: 1 * circleCounter,
-                            radius: circleOptions.radius * (1 / mapRef.current.getZoom()),
-                        }}
-                    />
-                )}
             </GoogleMap>
 
             {showPopup && (
                 <div className="popup-cart-find">
                     <span onClick={handleClosePopup}>&times;</span>
-                    <p className="text-popup">Félicitation ! Vous avez trouvé la carte Ahri !</p>
-                    <p className="text-popup">La carte a été ajoutée à votre collection.</p>
-                    <img src={game.collection.card.image_url} alt="Popup" />
-{/*                     <div className="explosion">
-                        {isExploding && typeof window !== 'undefined' && (
-                            <ConfettiExplosion 
-                                force={0.8}
-                                duration={3000}
-                                particleCount={250}
-                                width={1600}
-                            />
-                        )}
-                    </div> */}
+                    <div className="popup_image" style={{backgroundImage: `url(${game.collection.card.image_url})`, borderColor: `${colorRarityMap[game.collection.card.rarity]}`}}>
+                        <div className="popup-slider" />
+                    </div>
+                    {/* <p className="text-popup">Félicitation ! Vous avez trouvé la carte</p> */}
+                    {/* <p className="text-mask" style={{backgroundImage: `url(${game.collection.card.image_url})`}}>{game.collection.card.name}</p> */}
+                    <p className="text-mask">{game.collection.card.name}</p>
+                    <p className="popup">Nouvelle carte dans votre collection: {game.collection.card.name}</p>
                 </div>
             )}
         </div>

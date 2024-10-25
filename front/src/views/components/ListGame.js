@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ItemGame from './ItemGame';
 import '../../css/ListGame.css';
-import { customFetch } from '../utils/customFetch';
+import { customGetAllFetch } from '../utils/customFetch';
 
 const ListGame = () => {
 
@@ -9,7 +9,7 @@ const ListGame = () => {
     const [loading, setLoading] = useState(true);  
 
     useEffect(() => {
-         customGetAllFetch('parties').then( data =>
+        customGetAllFetch('parties').then( data =>
             setGames(data)
         ).then( data =>
             console.log(data)
