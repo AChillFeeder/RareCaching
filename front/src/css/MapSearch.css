@@ -34,15 +34,96 @@
     text-align: center;
 }
 
-.explosion {
-    position: absolute; /* Positionne le confetti par rapport à la pop-up */
-    top: 0;
+.popup_image{
+    position: absolute;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%); /* Centrage horizontal */
+    transform: translate(-50%, -50%);
+    display: block;
+    border: 3px solid #fff;
+    width: 305px;
+    height: 560px;
+    overflow: hidden;
+}.popup_image::before {
+    content: "";
+    display: block;
     width: 100%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 200; /* S'assure que l'explosion est par-dessus tout */
+}
+
+@keyframes popupAnimation {
+    0% {
+    top: -15%;
+    }
+    100% {
+    top: 150%;
+    }
+    /* 100% {
+    top: -70%;
+    } */
+}
+
+@keyframes textAnimation {
+    0% {
+        opacity: 0;
+        background-position: 10px;
+        letter-spacing: 2px;
+    }
+    100% {
+        opacity: 1;
+        background-position: 100px;
+        letter-spacing: 25px;
+    }
+}
+
+.popup-slider {
+    position: absolute;
+    rotate: 45deg;
+    top: -15%;
+    left: 0;
+    width: 300%;
+    height: 100%;
+    /* background-color: black; */
+    /* backdrop-filter: blur(5px); */
+    backdrop-filter: sepia(100%);
+    animation: popupAnimation 2s ease-out;
+    animation-iteration-count: 1; /* Animation only runs once */
+    animation-fill-mode: forwards; /* Ensure the element stays in the final state */
+}
+
+.text-mask {
+    font-size: 250px; /* Adjust the font size */
+    font-weight: bold;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text; /* Safari support */
+    background-size: cover;
+    text-align: center;
+    text-transform: uppercase; /* Optional: make the text uppercase */
+    position: relative;
+    /* backdrop-filter: blur(10px); */
+    text-transform: uppercase;
+    background-size: cover;
+    background-position: 10px;
+    /* text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.248); */
+    /* background-image: url('https://e1.pxfuel.com/desktop-wallpaper/380/443/desktop-wallpaper-ionia.jpg'); */
+    background-image: url('https://images6.alphacoders.com/913/thumb-1920-913909.jpg');
+    top: 20%;
+    animation: textAnimation 2s ease-out;
+    animation-iteration-count: 1; /* Animation only runs once */
+    animation-fill-mode: forwards; /* Ensure the element stays in the final state */
+}
+
+.popup {
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    padding: 15px;
+    color: white;
+    letter-spacing: 3px;
+    /* font-weight: bold; */
+    background-color: green;
+    top: 0;
+    text-align: center;
+    text-transform: uppercase;
 }

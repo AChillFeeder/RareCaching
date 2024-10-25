@@ -9,7 +9,7 @@ const ListGame = () => {
     const [loading, setLoading] = useState(true);  
 
     useEffect(() => {
-         customGetAllFetch('parties').then( data =>
+        customGetAllFetch('parties').then( data =>
             setGames(data)
         ).then( data =>
             console.log(data)
