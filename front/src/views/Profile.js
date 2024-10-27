@@ -38,6 +38,25 @@ const Profile = () => {
         "tres rare": "red",
     }
 
+    const championsWithDifferentCircularImageNames = {
+        "cho'gath": 'https://raw.communitydragon.org/14.9/game/assets/characters/chogath/hud/greenterror_circle.png',
+        'orianna': 'https://raw.communitydragon.org/14.9/game/assets/characters/orianna/hud/oriana_circle.png',
+        'skarner': 'https://raw.communitydragon.org/14.9/game/assets/characters/skarner/hud/skarner_circle_0.skarner_rework.png',
+        'lee sin': 'https://raw.communitydragon.org/14.9/game/assets/characters/leesin/hud/leesin_circle_0.asu_leesin.png',
+        'anivia': 'https://raw.communitydragon.org/14.9/game/assets/characters/anivia/hud/cryophoenix_circle.png',
+        'blitzcrank': 'https://raw.communitydragon.org/14.9/game/assets/characters/blitzcrank/hud/steamgolem_circle.png',
+        'dr. mundo': 'https://raw.communitydragon.org/14.9/game/assets/characters/drmundo/hud/drmundo_circle_0.png',
+        'rammus': 'https://raw.communitydragon.org/14.9/game/assets/characters/rammus/hud/armordillo_circle.png',
+        'shaco': 'https://raw.communitydragon.org/14.9/game/assets/characters/shaco/hud/jester_circle.png',
+        'wukong': 'https://raw.communitydragon.org/14.9/game/assets/characters/monkeyking/hud/monkeyking_circle.png',
+        'zilean': 'https://raw.communitydragon.org/14.9/game/assets/characters/zilean/hud/chronokeeper_circle.png',
+        'vex': 'https://raw.communitydragon.org/14.9/game/assets/characters/vex/hud/vex_circle_0.png'
+    }
+
+    const championsWithDifferentRectangularImageNames = {
+
+    }
+
     const handleChange = (event, newValue) => {
         let rarityFilter = "";
         setValue(newValue);
@@ -122,6 +141,36 @@ const Profile = () => {
         setOwnershipData(ownershipMap);
     }
 
+    const getChampionRectangleImageUrl = (champion) => {
+        switch (champion.name.toLowerCase()) {
+            case 'dr. mundo':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/drmundo/skins/base/drmundoloadscreen_0.png'
+            case 'hecarim':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/hecarim/skins/base/hecarimloadscreen_0.png'
+            case 'jax':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/jax/skins/base/jaxloadscreen_0.png'
+            case 'kassadin':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/kassadin/skins/base/kassadinloadscreen_0.png'
+            case 'lee sin':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/leesin/skins/base/leesinloadscreen_0.asu_leesin.png'
+            case 'sivir':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/sivir/skins/base/sivirloadscreen_0.png'
+            case 'skarner':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/skarner/skins/base/skarnerloadscreen_0.skarner_rework.png'
+            case 'syndra':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/syndra/skins/base/syndraloadscreen_0.png'
+            case 'udyr':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/udyr/skins/base/udyrloadscreen_0.png'
+            case 'wukong':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/monkeyking/skins/base/monkeykingloadscreen.png'
+            case 'gwen':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/gwen/skins/base/gwenloadscreen_0.png'
+            case 'vex':
+                return 'https://raw.communitydragon.org/14.9/game/assets/characters/vex/skins/base/vexloadscreen_0.png'
+        }
+        return champion.image_url.replace(/'/g, "").replace(/ /g, "")
+    }
+
 
     return (
         <div className='container'>
@@ -165,12 +214,23 @@ const Profile = () => {
 
                 <div className='all-cards-container'>
                     {filteredCards && filteredCards.map((champion, index) => (
-                        <div className='champion-container' id={champion.id} key={champion.id} style={{ backgroundImage: `url(${champion.image_url.replace(/'/g, "").replace(/ /g, "")})`, borderColor: `${colorRarityMap[champion.rarity]}` }}>
+                        <div className='champion-container' id={champion.id} key={champion.id} style={{ backgroundImage: `url(${getChampionRectangleImageUrl(champion)})`, borderColor: `${colorRarityMap[champion.rarity]}` }}>
                             <Box className="champion-card">
                                 <p className='default'>{`${champion.name}`}</p>
                                 <div className='hover'>
                                     <div className='champion-data'>
-                                        <img src={champion.image_url.replace(/'/g, "").replace(/ /g, "").replace('skins/base', 'hud').replace('loadscreen', '_circle')}/>
+                                    <img 
+                                        src={champion.image_url.replace(/'/g, "").replace(/ /g, "").replace('skins/base', 'hud').replace('loadscreen', '_circle')} 
+                                        onError={(e) => { 
+                                            e.target.onerror = null; // éviter boucle infini en cas d'autres soucis
+                                            // e.target.src = `${process.env.PUBLIC_URL}/images/circular/${champion.name}.jpeg`;
+                                            if(championsWithDifferentCircularImageNames[champion.name.toLowerCase()]){
+                                                e.target.src = championsWithDifferentCircularImageNames[champion.name.toLowerCase()];
+                                            } else {
+                                                e.target.src = champion.image_url.replace(/'/g, "").replace(/ /g, "").replace('skins/base', 'hud').replace('loadscreen', '_circle_0');
+                                            }
+                                        }}
+                                    />
                                         <p>{`${champion.name}`}</p>
                                         <p className='copies'>Copies: {ownershipData[champion.id] || 0}</p>
                                     </div>

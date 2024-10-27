@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { mapOptions } from './configurations/MapConfiguration';
 import Map from './components/MapCreate';
-import slide_image1 from "../assets/champions/champion1.jpeg";
 
 const CreateGame = () => {
   const location = useLocation();
