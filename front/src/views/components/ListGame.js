@@ -19,7 +19,7 @@ const ListGame = () => {
     
     return (
         <div>
-            <h2 className='title-column'>Rejoindre une chasse</h2>
+            <h1 style={{marginLeft: '15px'}} className='title'>Rejoindre une chasse</h1>
             <div className='game-container'>
                 <div className='game-container-header'>
                     <input type='text' placeholder='Filtrer par référence ou par organisateur' className='searchBar'/>
