@@ -1,9 +1,10 @@
 .title {
     color: #CFCCDE;
     margin-right: 10px;
-    font-size: 20px;
+    font-size: 70px;
     cursor: pointer;
-    text-align: center;
+    /* text-align: center; */
+    font-weight: lighter;
 }
 
 .game-details {
