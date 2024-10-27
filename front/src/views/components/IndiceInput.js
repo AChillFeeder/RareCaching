@@ -13,7 +13,7 @@ function IndiceInput(props) {
       <input
         type="text"
         className="input-box-todo"
-        placeholder="Enter your todo"
+        placeholder="Notez votre indice"
         value={inputText}
         onChange={e=>{
             setInputText(e.target.value)

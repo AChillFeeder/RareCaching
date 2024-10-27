@@ -2,18 +2,11 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-from flask import Flask
+from flask import Flask, redirect
 from flask_cors import CORS
-# from flask import Flask, request, redirect, flash, url_for, session, jsonify, abort
-# from flask_login import login_user, logout_user
-# from functools import wraps
 from models import db
 from models import *
-# import bcrypt
-# from routes.user_crud import  user_crud
-# from routes.indice_crud import  indice_crud
-# from routes.coffre_crud import  coffre_crud
-# from routes.partie_crud import  partie_crud
+from flask_login import LoginManager, login_required, current_user
 
 from apiImplementation import ApiImplementation
 
@@ -22,21 +15,27 @@ from apiImplementation import ApiImplementation
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 app.config.from_pyfile('config.py')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = ''
 db.init_app(app)
 
 
-
-# Automatically tear down SQLAlchemy. | Bonne pratique
-# @app.teardown_request
-# def shutdown_session(exception=None):
-#     db_session.remove()
+@login_manager.user_loader
+def load_user(user_id):
+    # return User.query.get(int(user_id))
+    return User.query.get(user_id)
 
 
 # User Endpoints
 #----------------------------------------------------------------------------#
+
+@app.route('/user', methods=['GET'])
+def get_current_user():
+    return ApiImplementation().get_current_user()
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -66,6 +65,8 @@ def create_partie():
 # Card Endpoints
 @app.route('/cards', methods=['GET'])
 def get_cards():
+    if current_user.is_authenticated:
+        print(f"User {current_user.id} is authenticated")
     return ApiImplementation().get_cards()
 
 @app.route('/cards/<int:card_id>', methods=['GET'])

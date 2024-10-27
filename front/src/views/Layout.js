@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TiThMenu } from "react-icons/ti";
 import { IoGameControllerOutline } from "react-icons/io5";
@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { PiBasketBold } from "react-icons/pi";
 import { HiOutlineInformationCircle } from "react-icons/hi";
 import { TbLogout } from "react-icons/tb";
+import { customGetAllFetch } from './utils/customFetch';
 import '../css/Layout.css';
 
 // ---------------------------------------------------------------------------------------------
@@ -19,6 +20,7 @@ const Layout = ({ children }) => {
     // Déclarations constantes
     // -----------------------------------------------------------------------------------------
 
+    const [user, setUser] = useState([]);
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -38,6 +40,15 @@ const Layout = ({ children }) => {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
+    // useEffect(() => {
+    //     customGetAllFetch('user').then( data =>
+    //     // setUser(data)
+    //     console.log(`customGetAllFetch user: ${data}`)
+    // ).then( data =>
+    //     console.log(data)
+    // )
+    // }, []);
 
     
     return (

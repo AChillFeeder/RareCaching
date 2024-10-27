@@ -20,14 +20,28 @@ import { customGetAllFetch } from './utils/customFetch';
 const Profile = () => {
 
     const [cards, setCards] = useState([]);
+    const [filteredCards, setFilteredCards] = useState([]);
+    const [user, setUser] = useState([]);
+
 
     useEffect(() => {
-        customGetAllFetch('cards').then( data =>
-        setCards(data)
+        customGetAllFetch('cards').then( data => {
+            setCards(data)
+            setFilteredCards(data)
+        }
     ).then( data =>
         console.log(data)
     )
     }, []);
+
+    useEffect(() => {
+        customGetAllFetch('user').then( data =>
+        console.log(`customGetAllFetch user: ${data}`)
+    ).then( data =>
+        console.log(data)
+    )
+    }, []);
+
 
 
     const navigate = useNavigate();
@@ -44,7 +58,39 @@ const Profile = () => {
     }
 
     const handleChange = (event, newValue) => {
+        let rarityFilter = "";
         setValue(newValue);
+        switch (newValue) {
+            case 0:
+                setFilteredCards(cards)
+                break;
+            
+            case 1:
+                rarityFilter = "commune"
+                break;
+            case 2:
+                rarityFilter = "rare"
+                break;
+            case 3:
+                rarityFilter = "tres rare"
+                break;
+            case 4:
+                rarityFilter = "exceptionnelle"
+                break;
+            case 5:
+                rarityFilter = "unique"
+                break;
+
+            default:
+                break;            
+
+        }
+        
+        let filteredCards = cards.filter( card => {
+            return card.rarity == rarityFilter;
+        } )
+
+        setFilteredCards(filteredCards);
     };
 
     useEffect(() => {
@@ -75,7 +121,7 @@ const Profile = () => {
             <div className='profile-details'>
               <div className='game-group-field'>
                 <p className='game-field'>Pseudo : </p>
-                <p className='game-value'>Jonkox</p>
+                <p className='game-value'></p>
               </div>
               <div className='game-group-field'>
                 <p className='game-field'>Adresse mail :</p>
@@ -106,28 +152,28 @@ const Profile = () => {
                 </Tabs>
             </Box>
 
-            {value === 0 && (
-                <Box className="collection-container" sx={{ padding: '20px' }}>
+            
+            <Box className="collection-container" sx={{ padding: '20px' }}>
 
-                    <div className='all-cards-container'>
-                        {cards.map((champion, index) => (
-                            <div className='champion-container' style={{ backgroundImage: `url(${champion.image_url.replace(/'/g, "").replace(/ /g, "")})`, borderColor: `${colorRarityMap[champion.rarity]}` }}>
-                                <Box className="champion-card">
-                                    <p className='default'>{`${champion.name}`}</p>
-                                    <div className='hover'>
-                                        <div className='champion-data'>
-                                            <img src={champion.image_url.replace(/'/g, "").replace(/ /g, "").replace('skins/base', 'hud').replace('loadscreen', '_circle')}/>
-                                            <p>{`${champion.name}`}</p>
-                                        </div>
-                                            <button onClick={() => handleBtnClick(champion)}>Créer un cache</button>
+                <div className='all-cards-container'>
+                    {filteredCards && filteredCards.map((champion, index) => (
+                        <div className='champion-container' style={{ backgroundImage: `url(${champion.image_url.replace(/'/g, "").replace(/ /g, "")})`, borderColor: `${colorRarityMap[champion.rarity]}` }}>
+                            <Box className="champion-card">
+                                <p className='default'>{`${champion.name}`}</p>
+                                <div className='hover'>
+                                    <div className='champion-data'>
+                                        <img src={champion.image_url.replace(/'/g, "").replace(/ /g, "").replace('skins/base', 'hud').replace('loadscreen', '_circle')}/>
+                                        <p>{`${champion.name}`}</p>
                                     </div>
-                                </Box>
-                            </div>
+                                        <button onClick={() => handleBtnClick(champion)}>Créer un cache</button>
+                                </div>
+                            </Box>
+                        </div>
 
-                        ))}
-                    </div>
-                </Box>
-            )}
+                    ))}
+                </div>
+            </Box>
+            
 
             
         </div>

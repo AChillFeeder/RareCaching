@@ -1,9 +1,23 @@
 from models import *
 from flask import jsonify, request, abort
 import bcrypt
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 class ApiImplementation:
+
+    @staticmethod
+    def get_current_user():
+        print(f"Utilisateur connecté : {current_user}")
+        if current_user.is_authenticated:
+            print(f"Utilisateur connecté : {current_user}")
+            return jsonify({
+                'id': current_user.id,
+                'username': current_user.username,
+                'email': current_user.email,
+                'monnaie_virtuelle': current_user.monnaie_virtuelle
+            })
+        return jsonify({"error" : "User not authenticated"}), 401
+
     @staticmethod
     def get_users():
         users = User.query.all()
@@ -31,12 +45,15 @@ class ApiImplementation:
     
     @staticmethod
     def login():
-        if not request.json or 'username' not in request.json or 'password' not in request.json:
-            abort(400, description="Username and password are required")
-        user = User.query.filter_by(username=request.json['username']).first()
-        if user and bcrypt.checkpw(request.json['password'].encode('utf-8'), user.password):
-            login_user(user)
-            return jsonify({'message': 'Login successful'}), 200
+        if not request.json or 'email' not in request.json or 'password' not in request.json:
+            abort(400, description="Email and password are required")
+        user = User.query.filter_by(email=request.json['email']).first()
+        if user:
+            hashed_password = user.password
+            hashed_password = hashed_password.encode('utf-8')
+            if bcrypt.checkpw(request.json['password'].encode('utf-8'), hashed_password):
+                login_user(user)
+                return jsonify({'message': 'Login successful'}), 200
         else:
             abort(401, description="Invalid credentials")
 
@@ -48,6 +65,8 @@ class ApiImplementation:
     # Get Parties Endpoint
     @staticmethod
     def get_parties():
+        print("current_user: ")
+        print(current_user)
         parties = Partie.query.all()
         return jsonify([{
             'id': partie.id,
