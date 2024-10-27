@@ -62,9 +62,9 @@ const Profile = () => {
         setValue(newValue);
         switch (newValue) {
             case 0:
-                setFilteredCards(cards)
+                // setFilteredCards(cards)
+                rarityFilter = ""
                 break;
-            
             case 1:
                 rarityFilter = "commune"
                 break;
@@ -87,7 +87,7 @@ const Profile = () => {
         }
         
         let filteredCards = cards.filter( card => {
-            return card.rarity == rarityFilter;
+            return card.rarity.includes(rarityFilter);
         } )
 
         setFilteredCards(filteredCards);
