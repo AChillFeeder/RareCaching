@@ -1,9 +1,23 @@
 from models import *
 from flask import jsonify, request, abort
 import bcrypt
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 class ApiImplementation:
+
+    @staticmethod
+    def get_current_user():
+        print(f"Utilisateur connecté : {current_user}")
+        if current_user.is_authenticated:
+            print(f"Utilisateur connecté : {current_user}")
+            return jsonify({
+                'id': current_user.id,
+                'username': current_user.username,
+                'email': current_user.email,
+                'monnaie_virtuelle': current_user.monnaie_virtuelle
+            })
+        return jsonify({"error" : "User not authenticated"}), 401
+
     @staticmethod
     def get_users():
         users = User.query.all()

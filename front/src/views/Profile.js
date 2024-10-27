@@ -20,10 +20,19 @@ import { customGetAllFetch } from './utils/customFetch';
 const Profile = () => {
 
     const [cards, setCards] = useState([]);
+    const [user, setUser] = useState([]);
 
     useEffect(() => {
         customGetAllFetch('cards').then( data =>
         setCards(data)
+    ).then( data =>
+        console.log(data)
+    )
+    }, []);
+
+    useEffect(() => {
+        customGetAllFetch('user').then( data =>
+        setUser(data)
     ).then( data =>
         console.log(data)
     )
@@ -75,7 +84,7 @@ const Profile = () => {
             <div className='profile-details'>
               <div className='game-group-field'>
                 <p className='game-field'>Pseudo : </p>
-                <p className='game-value'>Jonkox</p>
+                <p className='game-value'></p>
               </div>
               <div className='game-group-field'>
                 <p className='game-field'>Adresse mail :</p>
@@ -110,7 +119,7 @@ const Profile = () => {
                 <Box className="collection-container" sx={{ padding: '20px' }}>
 
                     <div className='all-cards-container'>
-                        {cards.map((champion, index) => (
+                        {cards && cards.map((champion, index) => (
                             <div className='champion-container' style={{ backgroundImage: `url(${champion.image_url.replace(/'/g, "").replace(/ /g, "")})`, borderColor: `${colorRarityMap[champion.rarity]}` }}>
                                 <Box className="champion-card">
                                     <p className='default'>{`${champion.name}`}</p>
