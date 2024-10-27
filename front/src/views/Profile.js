@@ -1,27 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import '../css/Profile.css';
 import { customGetAllFetch } from './utils/customFetch';
+import { UserContext } from './UserContext';
 
-
-// const generateChampionCollection = (champions) => {
-//     const championsArray = Array(100).fill(null); // Tableau de 100 éléments
-
-//     champions.forEach((champion) => {
-//         championsArray[champion.id - 1] = champion; // Placer chaque champion à sa position (id-1)
-//     });
-
-//     return championsArray;
-// };
 
 const Profile = () => {
 
+    const { user } = useContext(UserContext);
     const [cards, setCards] = useState([]);
     const [filteredCards, setFilteredCards] = useState([]);
-    const [user, setUser] = useState([]);
+    // const [user, setUser] = useState([]);
 
 
     useEffect(() => {
@@ -34,13 +26,13 @@ const Profile = () => {
     )
     }, []);
 
-    useEffect(() => {
-        customGetAllFetch('user').then( data =>
-        console.log(`customGetAllFetch user: ${data}`)
-    ).then( data =>
-        console.log(data)
-    )
-    }, []);
+    // useEffect(() => {
+    //     customGetAllFetch('user').then( data =>
+    //     console.log(`customGetAllFetch user: ${data}`)
+    // ).then( data =>
+    //     console.log(data)
+    // )
+    // }, []);
 
 
 
@@ -121,11 +113,11 @@ const Profile = () => {
             <div className='profile-details'>
               <div className='game-group-field'>
                 <p className='game-field'>Pseudo : </p>
-                <p className='game-value'></p>
+                <p className='game-value'>{user && user.username}</p>
               </div>
               <div className='game-group-field'>
                 <p className='game-field'>Adresse mail :</p>
-                <p className='game-value'>sarah.allaire@supdevinci-edu.com</p>
+                <p className='game-value'>{user && user.email}</p>
               </div>
             </div>
 
