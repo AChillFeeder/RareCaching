@@ -228,3 +228,28 @@ class ApiImplementation:
                 'user_id': partie.collection.user_id
             } if partie.collection else None
         })
+    
+    @staticmethod
+    def get_user_card_count(user_id):
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        # Group collections by card_id and count occurrences to get card counts for the user
+        card_counts = db.session.query(
+            Collection.card_id, db.func.count(Collection.card_id)
+        ).filter_by(user_id=user_id).group_by(Collection.card_id).all()
+
+        # Build response with card information
+        card_details = []
+        for card_id, count in card_counts:
+            card = Card.query.get(card_id)
+            card_details.append({
+                'card_id': card_id,
+                'name': card.name,
+                'rarity': card.rarity,
+                'count': count
+            })
+
+        return jsonify(card_details), 200
+

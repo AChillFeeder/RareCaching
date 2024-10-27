@@ -105,6 +105,11 @@ def create_user_collection():
 def get_parties_by_id(partie_id):
     return ApiImplementation().get_partie_by_id(partie_id)
 
+@app.route('/users/<int:user_id>/card_count', methods=['GET'])
+@login_required
+def get_user_card_count(user_id):
+    return ApiImplementation().get_user_card_count(user_id)
+
 #----------------------------------------------------------------------------#
 # Launch.
 #----------------------------------------------------------------------------#

@@ -13,8 +13,7 @@ const Profile = () => {
     const { user } = useContext(UserContext);
     const [cards, setCards] = useState([]);
     const [filteredCards, setFilteredCards] = useState([]);
-    // const [user, setUser] = useState([]);
-
+    const [ownershipData, setOwnershipData] = useState([]);
 
     useEffect(() => {
         customGetAllFetch('cards').then( data => {
@@ -25,16 +24,6 @@ const Profile = () => {
         console.log(data)
     )
     }, []);
-
-    // useEffect(() => {
-    //     customGetAllFetch('user').then( data =>
-    //     console.log(`customGetAllFetch user: ${data}`)
-    // ).then( data =>
-    //     console.log(data)
-    // )
-    // }, []);
-
-
 
     const navigate = useNavigate();
 
@@ -75,7 +64,6 @@ const Profile = () => {
 
             default:
                 break;            
-
         }
         
         let filteredCards = cards.filter( card => {
@@ -105,6 +93,34 @@ const Profile = () => {
     const handleBtnClick = (champion) => {
         navigate('/CreateGame', { state: { champion } });
     };
+
+    useEffect(() => {
+        if (user && user.id) {
+            customGetAllFetch(`users/${user.id}/card_count`).then( data => {
+                handleCardOwnership(data);
+            })
+        }
+    }, [user])
+
+    const handleCardOwnership = (data) => {
+        console.log("card ownership data");
+        console.log(data);
+        data.forEach(ownedCard => {
+            const element = document.getElementById(ownedCard.card_id);
+            if (element) {
+                element.classList.add('owned');
+            }
+        });
+
+        const ownershipMap = {};
+        data.forEach(ownedCard => {
+            ownershipMap[ownedCard.card_id] = ownedCard.count;
+        });
+
+        console.log("card ownership map");
+        console.log(ownershipMap);
+        setOwnershipData(ownershipMap);
+    }
 
 
     return (
@@ -149,13 +165,14 @@ const Profile = () => {
 
                 <div className='all-cards-container'>
                     {filteredCards && filteredCards.map((champion, index) => (
-                        <div className='champion-container' style={{ backgroundImage: `url(${champion.image_url.replace(/'/g, "").replace(/ /g, "")})`, borderColor: `${colorRarityMap[champion.rarity]}` }}>
+                        <div className='champion-container' id={champion.id} key={champion.id} style={{ backgroundImage: `url(${champion.image_url.replace(/'/g, "").replace(/ /g, "")})`, borderColor: `${colorRarityMap[champion.rarity]}` }}>
                             <Box className="champion-card">
                                 <p className='default'>{`${champion.name}`}</p>
                                 <div className='hover'>
                                     <div className='champion-data'>
                                         <img src={champion.image_url.replace(/'/g, "").replace(/ /g, "").replace('skins/base', 'hud').replace('loadscreen', '_circle')}/>
                                         <p>{`${champion.name}`}</p>
+                                        <p className='copies'>Copies: {ownershipData[champion.id] || 0}</p>
                                     </div>
                                         <button onClick={() => handleBtnClick(champion)}>Créer un cache</button>
                                 </div>
