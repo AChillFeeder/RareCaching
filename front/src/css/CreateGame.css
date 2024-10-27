@@ -57,11 +57,11 @@
   width: 150px;
   height: 150px;
 }
-.champion-container:hover .hover {
+.owner:hover .hover {
   display: flex;
   flex-direction: column;
 }
-.champion-container:hover .default {
+.owner:hover .default {
   display: none;
 }
 

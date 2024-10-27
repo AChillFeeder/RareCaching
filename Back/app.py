@@ -2,18 +2,11 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-from flask import Flask
+from flask import Flask, redirect
 from flask_cors import CORS
-# from flask import Flask, request, redirect, flash, url_for, session, jsonify, abort
-# from flask_login import login_user, logout_user
-# from functools import wraps
 from models import db
 from models import *
-# import bcrypt
-# from routes.user_crud import  user_crud
-# from routes.indice_crud import  indice_crud
-# from routes.coffre_crud import  coffre_crud
-# from routes.partie_crud import  partie_crud
+from flask_login import LoginManager, login_required, current_user
 
 from apiImplementation import ApiImplementation
 
@@ -22,21 +15,28 @@ from apiImplementation import ApiImplementation
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 app.config.from_pyfile('config.py')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = ''
 db.init_app(app)
 
 
-
-# Automatically tear down SQLAlchemy. | Bonne pratique
-# @app.teardown_request
-# def shutdown_session(exception=None):
-#     db_session.remove()
+@login_manager.user_loader
+def load_user(user_id):
+    # return User.query.get(int(user_id))
+    return User.query.get(user_id)
 
 
 # User Endpoints
 #----------------------------------------------------------------------------#
+
+@app.route('/user', methods=['GET'])
+@login_required
+def get_current_user():
+    return ApiImplementation().get_current_user()
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -50,48 +50,65 @@ def create_user():
 def login():
     return ApiImplementation().login()
 
-@app.route('/logout', methods=['POST'])
+@app.route('/logout', methods=['POST', 'GET'])
+@login_required
 def logout():
     return ApiImplementation().logout()
 
 # Partie Endpoints
 @app.route('/parties', methods=['GET'])
+@login_required
 def get_parties():
     return ApiImplementation().get_parties()
 
 @app.route('/parties', methods=['POST'])
+@login_required
 def create_partie():
     return ApiImplementation().create_partie()
 
 # Card Endpoints
 @app.route('/cards', methods=['GET'])
+@login_required
 def get_cards():
+    if current_user.is_authenticated:
+        print(f"User {current_user.id} is authenticated")
     return ApiImplementation().get_cards()
 
 @app.route('/cards/<int:card_id>', methods=['GET'])
+@login_required
 def get_card_by_id(card_id):
     return ApiImplementation().get_card_by_id(card_id)
 
 @app.route('/cards', methods=['POST'])
+@login_required
 def create_card():
     return ApiImplementation().createCard()
 
 # Collection Endpoints
 @app.route('/collections/user/<int:user_id>', methods=['GET'])
+@login_required
 def get_user_cards(user_id):
     return ApiImplementation().get_user_collection(user_id)
 
 @app.route('/collections/transfer', methods=['POST'])
+@login_required
 def transfer_collection_ownership():
     return ApiImplementation().transfer_collection_ownership()
 
 @app.route('/collections', methods=['POST'])
+@login_required
 def create_user_collection():
     return ApiImplementation().create_user_collection()
 
 @app.route('/parties/<int:partie_id>', methods=['GET'])
+@login_required
 def get_parties_by_id(partie_id):
     return ApiImplementation().get_partie_by_id(partie_id)
+
+@app.route('/users/<int:user_id>/card_count', methods=['GET'])
+@login_required
+def get_user_card_count(user_id):
+    return ApiImplementation().get_user_card_count(user_id)
 
 #----------------------------------------------------------------------------#
 # Launch.
