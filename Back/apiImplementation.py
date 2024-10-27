@@ -31,12 +31,15 @@ class ApiImplementation:
     
     @staticmethod
     def login():
-        if not request.json or 'username' not in request.json or 'password' not in request.json:
-            abort(400, description="Username and password are required")
-        user = User.query.filter_by(username=request.json['username']).first()
-        if user and bcrypt.checkpw(request.json['password'].encode('utf-8'), user.password):
-            login_user(user)
-            return jsonify({'message': 'Login successful'}), 200
+        if not request.json or 'email' not in request.json or 'password' not in request.json:
+            abort(400, description="Email and password are required")
+        user = User.query.filter_by(email=request.json['email']).first()
+        if user:
+            hashed_password = user.password
+            hashed_password = hashed_password.encode('utf-8')
+            if bcrypt.checkpw(request.json['password'].encode('utf-8'), hashed_password):
+                login_user(user)
+                return jsonify({'message': 'Login successful'}), 200
         else:
             abort(401, description="Invalid credentials")
 

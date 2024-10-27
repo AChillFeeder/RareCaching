@@ -9,6 +9,7 @@ from flask_cors import CORS
 # from functools import wraps
 from models import db
 from models import *
+from flask_login import LoginManager
 # import bcrypt
 # from routes.user_crud import  user_crud
 # from routes.indice_crud import  indice_crud
@@ -25,6 +26,8 @@ app = Flask(__name__)
 CORS(app)
 app.config.from_pyfile('config.py')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+login_manager = LoginManager()
+login_manager.init_app(app)
 db.init_app(app)
 
 

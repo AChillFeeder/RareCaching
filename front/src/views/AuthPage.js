@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import '../css/AuthPage.css';
+import { useNavigate } from 'react-router-dom';
+//import '../css/AuthPage.css';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -7,6 +8,7 @@ const AuthPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [nickname, setNickname] = useState(''); // Ajout de l'état pour le surnom
+  const navigate = useNavigate();
 
   const handleSwitchMode = () => {
     setIsLogin((prevMode) => !prevMode);
@@ -20,7 +22,7 @@ const AuthPage = () => {
     setNickname(''); // Réinitialisation du surnom
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isLogin && password !== confirmPassword) {
       alert("Les mots de passe ne correspondent pas !");
@@ -28,10 +30,36 @@ const AuthPage = () => {
     }
 
     const userData = {
-      email,
-      password,
-      ...(isLogin ? {} : { nickname }), // Inclure le surnom uniquement si on est en mode inscription
+      email: email,
+      password: password,
+       ...(isLogin ? {} : { username: nickname }), // Inclure le surnom uniquement si on est en mode inscription
     };
+
+    const url = isLogin ? 'login' : 'users';
+
+    console.log("Données envoyées : ", JSON.stringify(userData, null, 2));
+
+    try {
+      const response = await fetch(`http://localhost:5000/${url}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        navigate('/Dashboard');
+        
+
+
+
+    } else {
+        console.error('Erreur lors de la connection');
+      }
+    } catch (error) {
+      console.error('Erreur réseau:', error);
+    }
 
     if (isLogin) {
       console.log('Connexion:', userData);
