@@ -1,6 +1,6 @@
 export async function customGetAllFetch(endpoint) {
     try {
-      const response = await fetch(`http://localhost:5000/${endpoint}`);  
+      const response = await fetch(`http://localhost:5000/${endpoint}`, {credentials: 'include'});  
       if (response.ok) {
         const data = await response.json();
         console.log(data);

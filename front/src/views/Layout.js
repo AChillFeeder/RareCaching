@@ -41,14 +41,12 @@ const Layout = ({ children }) => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    // useEffect(() => {
-    //     customGetAllFetch('user').then( data =>
-    //     // setUser(data)
-    //     console.log(`customGetAllFetch user: ${data}`)
-    // ).then( data =>
-    //     console.log(data)
-    // )
-    // }, []);
+    useEffect(() => {
+        customGetAllFetch('user').then( data =>{
+            console.log(`customGetAllFetch user:`);
+            console.log(data);
+        }
+    )}, []);
 
     
     return (
