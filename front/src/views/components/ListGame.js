@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import ItemGame from './ItemGame';
-import '../../css/ListGame.css';
-import { customGetAllFetch } from '../utils/customFetch';
 import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
+import ItemGame from './ItemGame';
+import { customGetAllFetch } from '../utils/customFetch';
+import '../../css/ListGame.css';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -44,21 +44,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+// ---------------------------------------------------------------------------------------------
+// ListGame est le component qui gère la liste des parties (caches à trouver)
+// ---------------------------------------------------------------------------------------------
 const ListGame = () => {
 
+    // -----------------------------------------------------------------------------------------
+    // Déclarations constantes
+    // -----------------------------------------------------------------------------------------
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
     const [rarityFilter, setRarityFilter] = useState(null);
     const [searchText, setSearchText] = useState(null);
 
-
-    const handleChange = (event) => {
-        setRarityFilter(event.target.value);
-    }
-
-    const handleSearchChange = (event) => {
-        setSearchText(event.target.value.toLowerCase());
-    };
+    // -----------------------------------------------------------------------------------------
+    // useEffect
+    // -----------------------------------------------------------------------------------------
 
     useEffect(() => {
         customGetAllFetch('parties').then( data =>
@@ -68,7 +69,19 @@ const ListGame = () => {
         )
     }, []);
 
-    const filteredGames = games.filter((game) => {
+    // -----------------------------------------------------------------------------------------
+    // Fonctions
+    // -----------------------------------------------------------------------------------------
+
+    const handleChange = (event) => {
+        setRarityFilter(event.target.value);
+    }
+
+    const handleSearchChange = (event) => {
+        setSearchText(event.target.value.toLowerCase());
+    };
+
+    const filteredGames = games & games.filter((game) => {
         const matchesRarity = rarityFilter ? game.collection.card.rarity === rarityFilter : true;
         const matchesSearch = !searchText || game.organisateur.username.toLowerCase().includes(searchText);
         return matchesRarity && matchesSearch;
@@ -86,8 +99,8 @@ const ListGame = () => {
                         gap: 4,
                         alignItems: 'center',
                         width: '100%'
-                    }}>
-                    {/*<input type='text' placeholder='Filtrer par référence ou par organisateur' className='searchBar'/>*/}
+                    }}
+                >
                     <Search sx={{ flex:1 }}>
                         <SearchIconWrapper>
                             <SearchIcon sx={{ color: '#02163D' }}/>
@@ -103,63 +116,62 @@ const ListGame = () => {
                         sx={{
                             flex: 1,
                             marginRight: '30px',
-                            color: '#cfccde', // Couleur du texte
+                            color: '#cfccde', 
                             '& .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#cfccde', // Couleur du contour par défaut
+                                borderColor: '#cfccde', 
                             },
                             '&:hover .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#4e6491', // Couleur du contour au survol
+                                borderColor: '#4e6491', 
                             },
                             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#cfccde', // Couleur du contour au focus
+                                borderColor: '#cfccde',
                             },
-                        }}
-                        >
-                    <InputLabel 
-                        id="demo-simple-select-label"
-                        sx={{
-                            color: '#cfccde', // Couleur du texte
-                            '& .MuiSelect-icon': {
-                                color: '#cfccde' // Couleur de l'icône
-                            },
-                            '&.MuiFormLabel-filled': {
-                                    color: '#cfccde', // Couleur du texte du label quand rempli
-                                },
-                        }}
-                    >Rareté</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={rarityFilter}
-                        label="Rareté"
-                        onChange={handleChange}
-                        sx={{
-                            color: '#cfccde', // Couleur du texte
-                            '& .MuiSelect-icon': {
-                                color: '#cfccde' // Couleur de l'icône
-                            },
-                            '&:hover .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#4e6491', // Couleur du contour au survol
-                                },
-                            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                                    borderColor: '#4e6491', // Couleur du contour au focus
-                            },
-                            '&.Mui-focused': {
-                                color: '#4e6491', // Couleur du texte au focus
-                            },
-                            '& .MuiSelect-select': {
-                                color: '#cfccde', // Couleur du texte normal
-                            },
-                            
                         }}
                     >
-                        <MenuItem value="">Toutes</MenuItem>
-                        <MenuItem value={"commune"}>Commune</MenuItem>
-                        <MenuItem value={"rare"}>Rare</MenuItem>
-                        <MenuItem value={"tres rare"}>Très Rare</MenuItem>
-                        <MenuItem value={"exceptionnelle"}>Exceptionnelle</MenuItem>
-                        <MenuItem value={"unique"}>Unique</MenuItem>
-                    </Select>
+                        <InputLabel 
+                            id="demo-simple-select-label"
+                            sx={{
+                                color: '#cfccde', 
+                                '& .MuiSelect-icon': {
+                                    color: '#cfccde' 
+                                },
+                            '   &.MuiFormLabel-filled': {
+                                    color: '#cfccde', 
+                                },
+                            }}
+                        >Rareté</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={rarityFilter}
+                            label="Rareté"
+                            onChange={handleChange}
+                            sx={{
+                                color: '#cfccde', 
+                                '& .MuiSelect-icon': {
+                                    color: '#cfccde' 
+                                },
+                                '&:hover .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#4e6491', 
+                                    },
+                                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                        borderColor: '#4e6491', 
+                                },
+                                '&.Mui-focused': {
+                                    color: '#4e6491', 
+                                },
+                                '& .MuiSelect-select': {
+                                    color: '#cfccde', 
+                                },
+                            }}
+                        >
+                            <MenuItem value="">Toutes</MenuItem>
+                            <MenuItem value={"commune"}>Commune</MenuItem>
+                            <MenuItem value={"rare"}>Rare</MenuItem>
+                            <MenuItem value={"tres rare"}>Très Rare</MenuItem>
+                            <MenuItem value={"exceptionnelle"}>Exceptionnelle</MenuItem>
+                            <MenuItem value={"unique"}>Unique</MenuItem>
+                        </Select>
                     </FormControl>
                 </Box>
 
@@ -173,17 +185,6 @@ const ListGame = () => {
                 ) : (
                     <div className='text'>Aucune partie disponible.</div> 
                 )}
-                
-                {/* {games && games.length > 0 ? (
-                    games.map((game, index) => (
-                        <ItemGame
-                            key={index}
-                            game={game}
-                        />
-                    ))
-                ) : (
-                    <div className='text'>Aucune partie disponible.</div> 
-                )} */}
             </div>
         </div>
     ); 

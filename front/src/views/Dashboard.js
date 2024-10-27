@@ -3,24 +3,32 @@ import Alert from '@mui/material/Alert';
 import ListGame from './components/ListGame';
 import '../css/Dashboard.css';
 
-const isMobile = () => {
-  const userAgent = window.navigator.userAgent;
-  return /Mobi|Android/i.test(userAgent);
-};
-
+// ---------------------------------------------------------------------------------------------
+// Dashboard est la page d'accès à l'ensemble des partie (caches à chercher)
+// ---------------------------------------------------------------------------------------------
 const Dashboard = () => {
+
+    // -----------------------------------------------------------------------------------------
+    // Déclarations constantes
+    // -----------------------------------------------------------------------------------------
 
     const [open, setOpen] = useState(true);
 
+    // -----------------------------------------------------------------------------------------
+    // Fonctions
+    // -----------------------------------------------------------------------------------------
+
+    // Gère la fermeture de l'alerte
     const handleClose= () => {
         setOpen(false);
     }
 
+    // -----------------------------------------------------------------------------------------
+    // useEffect
+    // -----------------------------------------------------------------------------------------
+
     useEffect(() => {
-        // Si l'utilisateur n'est pas sur mobile, afficher l'alerte
-        if (!isMobile()) {
-          setOpen(true);
-        }
+        setOpen(true);
     }, []);
 
     return (
