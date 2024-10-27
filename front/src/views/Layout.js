@@ -35,6 +35,11 @@ const Layout = ({ children }) => {
         setIsMenuOpen(false);
     };
 
+    const logout = () => {
+        customGetAllFetch('/logout');
+        handleNavigation('/');
+    }
+
     // toggleMenu est appelée sur l'icon menu
     // La fonction ouvre le menu si l'icon est cliqué
     const toggleMenu = () => {
@@ -45,6 +50,10 @@ const Layout = ({ children }) => {
         customGetAllFetch('user').then( data =>{
             console.log(`customGetAllFetch user:`);
             console.log(data);
+            if(!data){
+                console.log("no session");
+                handleNavigation("/");
+            }
         }
     )}, []);
 
@@ -85,7 +94,7 @@ const Layout = ({ children }) => {
                                 <span className='menu-item-label'>Règles du jeu</span>
                             </div>
                         </li>
-                        <li  className='menu-item'>
+                        <li onClick={logout} className='menu-item'>
                             <div className='menu-item-container logout' >
                                 <TbLogout/>
                                 <span className='menu-item-label logout'>Déconnexion</span>
