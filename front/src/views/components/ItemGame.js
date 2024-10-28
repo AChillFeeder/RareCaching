@@ -61,10 +61,11 @@ const ItemGame = ({ game }) => {
     
     return (
         <div className='game-item' onClick={() => handleGame(game)}>
-            <span className='game-ref'>{game.id}</span>
-            <span className='game-pseudo'>{game.organisateur.username}</span>
-            <span>{getRarityLabel()}</span>
-            <img src={getRarityImage()} className='coffre-img'/>
+            <img src={getRarityImage()} className='coffre-img' title={getRarityLabel()}/>
+            <p className='game-ref'>#{game.id}</p>
+            <p className='game-pseudo'>Organisée par | <span className='nom-organisateur'>{game.organisateur.username}</span></p>
+            {/* <p>{getRarityLabel()}</p> */}
+
         </div>
     );
 };
