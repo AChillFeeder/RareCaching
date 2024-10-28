@@ -109,7 +109,7 @@ class ApiImplementation:
         partie = Partie(
             organisateur_id=organisateur.id,
             localisation_cache=request.json['localisation_cache'],
-            collection_id=collection,
+            collection_id=collection.id,
             indice=request.json.get('indice', '')
         )
 
