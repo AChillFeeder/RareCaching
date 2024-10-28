@@ -53,10 +53,6 @@ const Profile = () => {
         'vex': 'https://raw.communitydragon.org/14.9/game/assets/characters/vex/hud/vex_circle_0.png'
     }
 
-    const championsWithDifferentRectangularImageNames = {
-
-    }
-
     const handleChange = (event, newValue) => {
         let rarityFilter = "";
         setValue(newValue);
@@ -122,6 +118,9 @@ const Profile = () => {
     }, [user])
 
     const handleCardOwnership = (data) => {
+        if(!data){
+            return;
+        }
         console.log("card ownership data");
         console.log(data);
         data.forEach(ownedCard => {

@@ -253,3 +253,19 @@ class ApiImplementation:
 
         return jsonify(card_details), 200
 
+    @staticmethod
+    def delete_partie(partie_id):
+        # Retrieve the Partie by ID
+        partie = Partie.query.get(partie_id)
+        if not partie:
+            abort(404, description="Partie pas trouvée")
+
+        # Check if the current user is the organizer of the Partie
+        if partie.organisateur_id != current_user.id:
+            abort(403, description="Tu n'es pas autorisé à supprimer cette partie")
+
+        # Delete the Partie
+        db.session.delete(partie)
+        db.session.commit()
+
+        return jsonify({"message": "Partie supprimée"}), 200
