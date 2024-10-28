@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+.body-create-cache {
+  padding: 20px;
+}
+
 .main-container{
   display: flex;
   justify-content: center;
@@ -39,6 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #cfccde;
 }
 
 .hover {
@@ -88,7 +93,7 @@
   border-radius: 50%;
   border:none;
   background-color:#4e6491;
-  color: white;
+  color: #cfccde;
   font-weight: bolder;
   font-size: larger;
   margin-left: 10px;  
@@ -143,7 +148,7 @@
   border-radius: 5px;
   border:none;
   background-color:#4e6491;
-  color: white;
+  color: #cfccde;
   font-weight: bolder;
   font-size: small;
   cursor: pointer;
