@@ -85,6 +85,7 @@ const ListGame = () => {
         const matchesRarity = rarityFilter ? game.collection.card.rarity === rarityFilter : true;
         const matchesSearch = !searchText || game.organisateur.username.toLowerCase().includes(searchText);
         return matchesRarity && matchesSearch;
+        // return true;
     });
 
     
