@@ -81,7 +81,7 @@ const ListGame = () => {
         setSearchText(event.target.value.toLowerCase());
     };
 
-    const filteredGames = games & games.filter((game) => {
+    const filteredGames = games && games.filter((game) => {
         const matchesRarity = rarityFilter ? game.collection.card.rarity === rarityFilter : true;
         const matchesSearch = !searchText || game.organisateur.username.toLowerCase().includes(searchText);
         return matchesRarity && matchesSearch;
