@@ -3,6 +3,7 @@ import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+// import { useUser } from './UserContext';
 
 import ItemGame from './ItemGame';
 import { customGetAllFetch } from '../utils/customFetch';
@@ -56,6 +57,7 @@ const ListGame = () => {
     const [loading, setLoading] = useState(true);
     const [rarityFilter, setRarityFilter] = useState(null);
     const [searchText, setSearchText] = useState(null);
+    // const { currentUser } = useUser();
 
     // -----------------------------------------------------------------------------------------
     // useEffect
@@ -82,7 +84,10 @@ const ListGame = () => {
     };
 
     const filteredGames = games && games.filter((game) => {
-        const matchesRarity = rarityFilter ? game.collection.card.rarity === rarityFilter : true;
+        let matchesRarity = false;
+        if (game.collection) {
+            matchesRarity = rarityFilter ? game.collection.card.rarity === rarityFilter : true;
+        }
         const matchesSearch = !searchText || game.organisateur.username.toLowerCase().includes(searchText);
         return matchesRarity && matchesSearch;
         // return true;

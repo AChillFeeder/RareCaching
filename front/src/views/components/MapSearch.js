@@ -1,5 +1,5 @@
 import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import CacheMarker from '../../assets/coffres/coffre_violet2.png';
 import coffreCommun from '../../assets/coffres/coffreCommun.png';
 import coffreRare from '../../assets/coffres/coffreRare.png';
@@ -9,6 +9,8 @@ import coffreUnique from '../../assets/coffres/coffreUnique.png';
 import { useNavigate } from 'react-router-dom';
 import ConfettiExplosion from 'react-confetti-explosion';
 import '../../css/MapSearch.css';
+import { UserContext } from '../UserContext';
+
 const Map = ({ isLoaded, game}) => {
     const center = {
         lat: 47.2184,
@@ -24,7 +26,8 @@ const Map = ({ isLoaded, game}) => {
     const [circleCounter, setCircleCounter] = useState(-1);
     const [circleInitialized, setCircleInitialized] = useState(false);
     const [cacheMarker, setCacheMarker] = useState({ lat: null, lng: null});
-    const [isExploding, setIsExploding] = useState(true);
+    // const [isExploding, setIsExploding] = useState(true);
+    const { currentUser } = useContext(UserContext);
 
     const navigate = useNavigate();
     const containerStyle = {
@@ -58,7 +61,7 @@ const Map = ({ isLoaded, game}) => {
     const handleCacheClick = () => {
         setIsCacheOpen(true);
         setShowPopup(true);
-        setIsExploding(true);
+        // setIsExploding(true);
     };
 
     const handleClosePopup = () => {
@@ -182,6 +185,15 @@ const Map = ({ isLoaded, game}) => {
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c; // Distance en km
     }
+
+    useEffect(() => {
+        if(showPopup){
+            console.log("victoire!");
+            console.log(game.id);
+            console.log(game.collection.id);
+            console.log(currentUser);
+        }
+    }, [showPopup])
 
     return isLoaded && (
         <div className="container">
