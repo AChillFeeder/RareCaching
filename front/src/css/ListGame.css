@@ -10,6 +10,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    margin-bottom: 25px;
 }
 
 .searchBar {
@@ -17,10 +18,18 @@
     width: 40ch;
     font-size: 14px;
     border-radius: 5px;
+    height: 20px;
     background-color: #cfccde;
 }
 
 .text {
     color: #cfccde;
 }
+
+
+.MuiInputBase-root{
+    width: 100%;
+}
+
+
 
