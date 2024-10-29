@@ -128,7 +128,6 @@ const AuthPage = () => {
         <button className="AuthPageButton" type="submit">
           {isLogin ? 'Se connecter' : 'S’inscrire'}
         </button>
-      </form>
       <hr />
       <p>
         {isLogin ? 'Vous n\'est pas encore inscrit ?' : 'Vous avez déjà un compte ?'}
@@ -137,6 +136,7 @@ const AuthPage = () => {
         {isLogin ? 'S’inscrire' : 'Se connecter'}
       </button>
 
+      </form>
     </div>
     </div>
   );
