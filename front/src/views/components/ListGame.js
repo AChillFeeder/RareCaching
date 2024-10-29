@@ -55,6 +55,7 @@ const ListGame = () => {
     // -----------------------------------------------------------------------------------------
     const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
+
     const [rarityFilter, setRarityFilter] = useState(null);
     const [searchText, setSearchText] = useState(null);
     // const { currentUser } = useUser();
