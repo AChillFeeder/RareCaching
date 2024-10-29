@@ -1,0 +1,100 @@
+/* Page d'authentification */
+.auth-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #02163D; /* Couleur de fond générale */
+    color: #CFC0DE; /* Couleur du texte principal */
+    padding: 20px;
+}
+
+/* Titre */
+.auth-page h1 {
+    font-size: 28px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Formulaire */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background-color: #011B4F; /* Couleur de fond des éléments principaux */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Groupes de formulaires */
+.form-group {
+    width: 100%;
+}
+
+.form-group input {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #4E6491; /* Couleur de fond des champs de saisie */
+    color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+    color: #CFC0DE; /* Couleur du texte indicatif */
+    opacity: 1; /* Assurez-vous que l'opacité est à 1 pour une meilleure visibilité */
+}
+
+/* Boutons */
+.AuthPageButton {
+    background-color: #CFC0DE; /* Couleur des boutons */
+    color: #011B4F; /* Couleur du texte du bouton */
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.AuthPageButton:hover {
+    background-color: #4E6491;
+}
+
+/* Texte de bas de formulaire */
+.auth-page p {
+    font-size: 14px;
+    color: #CFC0DE; /* Texte secondaire */
+}
+
+/* Ligne de séparation */
+hr {
+    width: 100%;
+    border: 0.5px solid #CFC0DE;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .auth-page form {
+        padding: 20px;
+    }
+
+    .auth-page h1 {
+        font-size: 24px;
+    }
+
+    .AuthPageButton {
+        font-size: 14px;
+    }
+}
