@@ -146,14 +146,15 @@ const CreateGame = () => {
                     </div>
                 </div>
                     
-                <IndiceInput className='IndiceInput' addList={addList}/>
+                <div className='list-container'>
+                    <IndiceInput addList={addList}/>
                     {listIndices.map((listItem,i) => {
                         return (
-                            <IndicesList className='IndicesList' key={i} index={i} item={listItem} deleteItem={deleteListItem}/>
+                            <IndicesList className='list-item' key={i} index={i} item={listItem} deleteItem={deleteListItem}/>
                         )
                     })}
-                <button className='btn-create' onClick={handleBtnClick}>Créer cache</button>
-                    
+                    <button className='btn-create' onClick={handleBtnClick}>Créer cache</button>
+                </div>   
             </div>
         </div>
     );

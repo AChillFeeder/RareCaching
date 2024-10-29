@@ -60,10 +60,6 @@ const Game = () => {
                 <p className='game-field'>Créateur :</p>
                 <p className='game-value'>{game.organisateur.username}</p>
               </div>
-{/*               <div className='game-group-field'>
-                <p className='game-field'>Date de création :</p>
-                <p className='game-value'>07/10/2024</p>
-              </div> */}
               <div className='game-group-field'>
                 <p className='game-field'>Rareté :</p>
                 <p className='game-value'>{game.collection.card.rarity}</p>

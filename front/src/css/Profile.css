@@ -182,16 +182,16 @@
     max-width: 800px;
     padding: 10px;
     border: none;
-    border-bottom: 2px solid #007bff;
+    border-bottom: 2px solid #4e6491;
     border-radius: 0;
     font-size: 18px;
     background: none;
     transition: border-color 0.3s;
-    color: aliceblue
+    color: #4e6491
 }
 
 .search-bar input[type="text"]:focus {
-    border-color: #0056b3;
+    border-color: #4e6491;
     outline: none;
     box-shadow: none;
 }
