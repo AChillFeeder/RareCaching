@@ -11,10 +11,6 @@
     box-shadow: 0px 0px 0px 2px #ffffff, inset 0px 1px 20px -8px #000000, inset 0px -10px 27px -8px #000000af, 0px 7px 10px 0px rgba(225, 236, 235, 0.26);
 }
 
-span {
-    /* color: #cfccde; */
-}
-
 .coffre-img {
     max-width: 50px;
 }

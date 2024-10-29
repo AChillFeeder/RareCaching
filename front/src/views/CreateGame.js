@@ -46,7 +46,7 @@ const CreateGame = () => {
                 const collection = collections.find(collection => collection.card_id === champion.id);
                 console.log('collection = ', collection);
                 if (collection) {
-                    setCurrentCollection([collection]);
+                    setCurrentCollection(collection);
                 }
             }
         };
@@ -81,20 +81,22 @@ const CreateGame = () => {
         try {
             const indices = listIndices.join("\n");
 
-            console.log(JSON.stringify({
-                organisateur_id: user && user.id, 
-                collection_id: currentCollection.length > 0 ? currentCollection[0].id : null,
+            console.log("Donnèes envoyée à la création de la partie");
+            console.log({
+                organisateur_id: user.id,
+                collection_id: currentCollection.id,
                 localisation_cache: localisationCache,
                 indice: indices, 
-            }));
+            })
 
             const response = await fetch('http://localhost:5000/parties', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify({
-                    organisateur_id: user && user.id,
+                    organisateur_id: user.id,
                     collection_id: currentCollection.id,
                     localisation_cache: localisationCache,
                     indice: indices, 
