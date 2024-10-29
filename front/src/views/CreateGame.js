@@ -130,29 +130,28 @@ const CreateGame = () => {
                 </Alert>
             )}
             <div className='main-container'>
-                <div className="center-container">
-                    <h1 className="title">Créer une cache</h1>
-                    <Box className="champion-card">
-                        <p className='default'>{`${champion.name}`}</p>
-                        <div className='hover'>
-                            <div className='champion-data'>
-                                <img src={champion.image_url.replace(/'/g, "").replace(/ /g, "").replace('skins/base', 'hud').replace('loadscreen', '_circle')}/>
-                                <p>{`${champion.name}`}</p>
-                            </div>
+
+                <h1 className="title">Créer une partie</h1>
+                <div className='flex-container'>
+                    <div className="data-container">
+                        <div className="champion-card">
+                            <p className='champion-name'>{`${champion.name}`}</p>
+                            <img src={champion.image_url} className='create-cache-img'/>
                         </div>
-                    </Box>
-                    <img src={champion.image_url} className='create-cache-img'/>
-                    <IndiceInput addList={addList}/>
-                    {listIndices.map((listItem,i) => {
-                        return (
-                            <IndicesList key={i} index={i} item={listItem} deleteItem={deleteListItem}/>
-                        )
-                    })}
+                    </div>
                     <div className='map-container'>
                         <Map isLoaded={isLoaded} onMarkerDragEnd={handleMarkerDragEnd} rarity={champion.rarity}/>
                     </div>
-                    <button className='btn-create' onClick={handleBtnClick}>Créer cache</button>
                 </div>
+                    
+                <IndiceInput className='IndiceInput' addList={addList}/>
+                    {listIndices.map((listItem,i) => {
+                        return (
+                            <IndicesList className='IndicesList' key={i} index={i} item={listItem} deleteItem={deleteListItem}/>
+                        )
+                    })}
+                <button className='btn-create' onClick={handleBtnClick}>Créer cache</button>
+                    
             </div>
         </div>
     );
