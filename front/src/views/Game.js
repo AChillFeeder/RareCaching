@@ -4,17 +4,23 @@ import { useJsApiLoader } from '@react-google-maps/api';
 import { mapOptions } from './configurations/MapConfiguration';
 import Map from './components/MapSearch';
 import '../css/Game.css';
+import { useNavigate } from 'react-router-dom';
 import {move} from '../'
 
 const Game = () => {
 
   const location = useLocation();
   const game = location.state?.game;
+  const navigate = useNavigate();
 
   const { isLoaded } = useJsApiLoader ({
     id: mapOptions.googleMapApiKey,
     googleMapsApiKey: mapOptions.googleMapApiKey
   })
+
+  const handleBtnClick = () => {
+    navigate('/GeoMap');
+  }
 
   useEffect(() => {
     const draggableElement = document.getElementById('draggableIndicesList');
@@ -63,6 +69,9 @@ const Game = () => {
               <div className='game-group-field'>
                 <p className='game-field'>Rareté :</p>
                 <p className='game-value'>{game.collection.card.rarity}</p>
+              </div>
+              <div>
+                <button className='btn-create' onClick={handleBtnClick}>Créer cache</button>
               </div>
             </div>
             <div className='body-container'>

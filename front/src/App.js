@@ -6,6 +6,7 @@ import Dashboard from './views/Dashboard';
 import Game from './views/Game';
 import CreateGame from './views/CreateGame';
 import Profile from './views/Profile';
+import GeoMap from './views/GeoMap';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<AuthPage/>} />
           <Route path="/Dashboard" element={<Dashboard/>} />
           <Route path="/Game/:id" element={<Game/>} />
+          <Route path="/GeoMap" element={<GeoMap/>} />
           <Route path="/CreateGame" element={<CreateGame/>} />
           <Route path="/Profile" element={<Profile/>} />
         </Routes>
