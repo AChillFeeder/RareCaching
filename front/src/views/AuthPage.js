@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import '../css/AuthPage.css';
+import '../css/AuthPage.css';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -70,7 +70,18 @@ const AuthPage = () => {
     }
   };
 
+  useEffect(() => {
+    const headers = document.getElementsByClassName("header");
+    for (let i = 0; i < headers.length; i++) {
+      headers[i].style.display = 'none';
+    }
+  }, []);
+  
+
   return (
+    <div className='auth-page-container'>
+
+    
     <div className="auth-page">
       <h1>{isLogin ? 'Connexion' : 'Inscription'}</h1>
       <form onSubmit={handleSubmit}>
@@ -126,6 +137,7 @@ const AuthPage = () => {
         {isLogin ? 'S’inscrire' : 'Se connecter'}
       </button>
 
+    </div>
     </div>
   );
 };

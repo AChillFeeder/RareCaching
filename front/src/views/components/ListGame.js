@@ -9,6 +9,8 @@ import ItemGame from './ItemGame';
 import { customGetAllFetch } from '../utils/customFetch';
 import '../../css/ListGame.css';
 
+
+
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -71,6 +73,13 @@ const ListGame = () => {
             console.log(data)
         )
     }, []);
+
+    useEffect(() => {
+        const headers = document.getElementsByClassName("header");
+        for (let i = 0; i < headers.length; i++) {
+          headers[i].style.display = 'flex';
+        }
+      }, []);
 
     // -----------------------------------------------------------------------------------------
     // Fonctions
