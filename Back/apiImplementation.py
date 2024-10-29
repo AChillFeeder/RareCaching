@@ -261,8 +261,8 @@ class ApiImplementation:
             abort(404, description="Partie pas trouvée")
 
         # Check if the current user is the organizer of the Partie
-        if partie.organisateur_id != current_user.id:
-            abort(403, description="Tu n'es pas autorisé à supprimer cette partie")
+        # if partie.organisateur_id != current_user.id:
+        #     abort(403, description="Tu n'es pas autorisé à supprimer cette partie")
 
         # Delete the Partie
         db.session.delete(partie)

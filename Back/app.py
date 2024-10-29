@@ -66,7 +66,7 @@ def get_parties():
 def create_partie():
     return ApiImplementation().create_partie()
 
-@app.route('/partie/<int:partie_id>', methods=['DELETE'])
+@app.route('/parties/<int:partie_id>', methods=['DELETE'])
 @login_required
 def delete_partie(partie_id):
     return ApiImplementation().delete_partie(partie_id)
