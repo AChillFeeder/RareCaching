@@ -1,6 +1,6 @@
 .auth-page-container {
     font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #02163D;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -40,7 +40,7 @@ font-size: 16px;
 .auth-page input[type="text"]:focus,
 .auth-page input[type="email"]:focus,
 .auth-page input[type="password"]:focus {
-border-color: #007bff;
+border-color: #0d3f79;
 outline: none;
 box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
@@ -48,7 +48,7 @@ box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 .auth-page .AuthPageButton {
 width: 100%;
 padding: 12px;
-background-color: #007bff;
+background-color: #0d3f79;
 color: #fff;
 border: none;
 border-radius: 5px;

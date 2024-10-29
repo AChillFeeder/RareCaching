@@ -2,13 +2,13 @@
     display: flex;
     /* justify-content: space-between; */
     align-items: center;
-    color: white;
+    color: #cfccde;
     margin-bottom: 25px; 
     background-color: #0d3f79;
     padding: 10px;
     gap: 25px;
-    -webkit-box-shadow: 0px 0px 0px 2px #ffffff, inset 0px 10px 27px -8px #141414, inset 0px -10px 27px -8px #74a0ff, 4px 9px 7px 0px rgba(19, 252, 233, 0.425); 
-    box-shadow: 0px 0px 0px 2px #ffffff, inset 0px 1px 20px -8px #000000, inset 0px -10px 27px -8px #000000af, 0px 7px 10px 0px rgba(225, 236, 235, 0.26);
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .coffre-img {
@@ -21,7 +21,6 @@
 
 p {
     font-weight: 200;
-    /* font-style: italic; */
 }
  
 
