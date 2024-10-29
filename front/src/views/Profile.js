@@ -217,16 +217,21 @@ const Profile = () => {
                     TabIndicatorProps={{
                         style: { backgroundColor: '#4e6491' } // Trait de sélection en blanc
                     }}
-                    textColor='black'
+                    textColor='#CFCCDE'
                     textAlign='center'
+                    TabScrollButtonProps={{
+                        sx: {
+                            color: '#CFCCDE' // Couleur des icônes de défilement
+                        }
+                    }}
                 >
-                    <Tab className='tab' label="Tous" style={{color: "white"}}/> 
-                    <Tab className='tab' label="Commune" style={{color: "white"}}/>
-                    <Tab className='tab' label="Rare" style={{color: "white"}}/>
-                    <Tab className='tab' label="Très Rare" style={{color: "white"}}/>
-                    <Tab className='tab' label="Exceptionnelle" style={{color: "white"}}/>
-                    <Tab className='tab' label="Unique" style={{color: "white"}}/>
-                    <Tab className='tab' label="Caches Créées" style={{color: "white"}}/>
+                    <Tab className='tab' label="Tous" sx={{color: "#CFCCDE", '&.Mui-selected': { color: '#4e6491' } }}/> 
+                    <Tab className='tab' label="Commune" sx={{color: "#CFCCDE", '&.Mui-selected': { color: '#4e6491' } }}/>
+                    <Tab className='tab' label="Rare" sx={{color: "#CFCCDE", '&.Mui-selected': { color: '#4e6491' } }}/>
+                    <Tab className='tab' label="Très Rare" sx={{color: "#CFCCDE", '&.Mui-selected': { color: '#4e6491' } }}/>
+                    <Tab className='tab' label="Exceptionnelle" sx={{color: "#CFCCDE", '&.Mui-selected': { color: '#4e6491' } }}/>
+                    <Tab className='tab' label="Unique" sx={{color: "#CFCCDE", '&.Mui-selected': { color: '#4e6491' } }}/>
+                    <Tab className='tab' label="Caches Créées" sx={{color: "#CFCCDE", '&.Mui-selected': { color: '#4e6491' } }}/>
                 </Tabs>
             </Box>
 
