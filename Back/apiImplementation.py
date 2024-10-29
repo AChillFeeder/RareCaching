@@ -94,16 +94,19 @@ class ApiImplementation:
     @staticmethod
     def create_partie():
         if not request.json or 'organisateur_id' not in request.json or 'localisation_cache' not in request.json:
+            print("Organisateur and localisation_cache are required fields")
             abort(400, description="Organisateur and localisation_cache are required fields")
 
         organisateur = User.query.get(request.json['organisateur_id'])
         if not organisateur:
+            print("Organisateur not found")
             abort(404, description="Organisateur not found")
 
         collection = None
         if 'collection_id' in request.json:
             collection = Collection.query.get(request.json['collection_id'])
             if not collection:
+                print("Collection not found")
                 abort(404, description="Collection not found")
 
         partie = Partie(
@@ -261,8 +264,8 @@ class ApiImplementation:
             abort(404, description="Partie pas trouvée")
 
         # Check if the current user is the organizer of the Partie
-        if partie.organisateur_id != current_user.id:
-            abort(403, description="Tu n'es pas autorisé à supprimer cette partie")
+        # if partie.organisateur_id != current_user.id:
+        #     abort(403, description="Tu n'es pas autorisé à supprimer cette partie")
 
         # Delete the Partie
         db.session.delete(partie)

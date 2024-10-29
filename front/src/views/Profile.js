@@ -14,6 +14,7 @@ const Profile = () => {
     const [cards, setCards] = useState([]);
     const [filteredCards, setFilteredCards] = useState([]);
     const [ownershipData, setOwnershipData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         customGetAllFetch('cards').then( data => {
@@ -140,6 +141,18 @@ const Profile = () => {
         setOwnershipData(ownershipMap);
     }
 
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        const updatedFilteredCards = cards.filter(card =>
+            card.name.toLowerCase().includes(query.toLowerCase()) &&
+            card.rarity.includes(value === 0 ? "" : handleChange(value))
+        );
+
+        setFilteredCards(updatedFilteredCards);
+    };
+
     const getChampionRectangleImageUrl = (champion) => {
         switch (champion.name.toLowerCase()) {
             case 'dr. mundo':
@@ -183,6 +196,15 @@ const Profile = () => {
                 <p className='game-field'>Adresse mail :</p>
                 <p className='game-value'>{user && user.email}</p>
               </div>
+            </div>
+
+            <div className="search-bar">
+                <input
+                    type="text"
+                    placeholder="Rechercher un champion..."
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                />
             </div>
 
             <Box className='box'>

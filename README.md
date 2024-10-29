@@ -67,5 +67,26 @@ Le diagramme de classes montre que chaque Utilisateur possède des Collections, 
 
 ![dc.png](dc.png)
 ## Interface
+1. Rejoindre une partie / liste de parties
 
-vdsvd
+Permet aux utilisateurs de voir et de rejoindre des parties de chasse. Un champ de recherche et des filtres par organisateur et rareté sont disponibles. Un message en haut de l’écran recommande l’utilisation d’un mobile ou d’une tablette pour le mode jeu. 
+![rejoindre.png](rejoindre.png)
+
+2. Ecran de jeu
+
+Affiche les détails d’une partie spécifique, incluant le numéro de partie, le créateur et la rareté. Une carte interactive permet aux joueurs de visualiser leur environnement, avec un espace pour des indices.
+![ecran.png](ecran.png)
+
+3. les cartes
+
+Cette partie affiche la liste des cartes
+![cartes.png](cartes.png)
+
+4. Ecran de la victoire
+Cet écran s’affiche lorsque le joueur obtient une nouvelle carte après avoir remporté une partie. La carte obtenue est mise en avant avec son nom en grand, et un message en haut confirme son ajout à la collection. L’arrière-plan montre une carte géographique, ajoutant au contexte de la victoire.
+![ecran_victoire.png](ecran_victoire.png)
+
+5. Création d’une partie
+Cet écran permet aux utilisateurs de créer une nouvelle partie de chasse. Ils peuvent sélectionner un emplacement sur la carte et fournir des indices pour guider les joueurs. Un bouton « Créer cache » valide la création de la partie, ajoutant ainsi une nouvelle chasse à la liste des parties disponibles.
+![creation_partie1.png](creation_partie1.png)
+![creation_partie2.png](creation_partie2.png)
