@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Entity, Scene } from "aframe-react";
 import "aframe";
 import "aframe-particle-system-component";
-import CameraBackground from "./Camerabackground";
+import CameraBackground from "./CameraBackground";
 
 // Définir les caches avec des positions dans le monde 3D
 const caches = [

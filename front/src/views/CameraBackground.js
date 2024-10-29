@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import IconCamera from '../assets/icon/ChangerCamera.png';
 
 const CameraBackground = () => {
     const videoRef = useRef(null);
     const streamRef = useRef(null);
-    const [isFrontCamera, setIsFrontCamera] = useState(true); // État pour gérer le type de caméra
+    const [isFrontCamera, setIsFrontCamera] = useState(true);
 
     const getCameraStream = async (facingMode) => {
         try {
@@ -31,9 +32,9 @@ const CameraBackground = () => {
     }, []);
 
     const toggleCamera = () => {
-        const newFacingMode = isFrontCamera ? 'environment' : 'user'; // Basculer entre les caméras
-        getCameraStream(newFacingMode); // Obtenez le flux de la caméra correspondante
-        setIsFrontCamera(!isFrontCamera); // Mettre à jour l'état de la caméra
+        const newFacingMode = isFrontCamera ? 'environment' : 'user';
+        getCameraStream(newFacingMode);
+        setIsFrontCamera(!isFrontCamera);
     };
 
     return (
@@ -59,11 +60,17 @@ const CameraBackground = () => {
                     top: '20px', 
                     left: '20px', 
                     padding: '10px', 
-                    fontSize: '16px', 
-                    zIndex: 1 // Assurez-vous que le bouton est au-dessus de la vidéo
+                    zIndex: 1, 
+                    background: 'transparent',
+                    border: 'none',
+                    cursor: 'pointer'
                 }}
             >
-                Changer de caméra
+                <img 
+                    src={IconCamera} 
+                    alt="Changer de caméra" 
+                    style={{ width: '30px', height: '30px' }} 
+                />
             </button>
         </div>
     );
