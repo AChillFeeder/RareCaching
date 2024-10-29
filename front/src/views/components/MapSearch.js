@@ -27,7 +27,7 @@ const Map = ({ isLoaded, game}) => {
     const [circleInitialized, setCircleInitialized] = useState(false);
     const [cacheMarker, setCacheMarker] = useState({ lat: null, lng: null});
     // const [isExploding, setIsExploding] = useState(true);
-    const { currentUser } = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     const navigate = useNavigate();
     const containerStyle = {
@@ -187,13 +187,56 @@ const Map = ({ isLoaded, game}) => {
     }
 
     useEffect(() => {
-        if(showPopup){
+        if (showPopup) {
             console.log("victoire!");
             console.log(game.id);
             console.log(game.collection.id);
-            console.log(currentUser);
+            console.log(user);
+
+            // Transfer card ownership to current user
+            fetch('http://localhost:5000/collections/transfer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    collection_id: game.collection.id,
+                    new_owner: user.id,
+                }),
+                credentials: 'include', // Include cookies for authentication
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Error transferring card');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('Card transferred successfully:', data);
+
+                    // After transferring card, delete game
+                    return fetch(`http://localhost:5000/parties/${game.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include', // Include cookies for authentication
+                    });
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Error deleting game');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('Game deleted successfully:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         }
-    }, [showPopup])
+    }, [showPopup]);
 
     return isLoaded && (
         <div className="container">
