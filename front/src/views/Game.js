@@ -71,7 +71,7 @@ const Game = () => {
                 <p className='game-value'>{game.collection.card.rarity}</p>
               </div>
               <div>
-                <button className='btn-create' onClick={handleBtnClick}>Créer cache</button>
+                <button className='btn-create' onClick={handleBtnClick}>Mode Géo</button>
               </div>
             </div>
             <div className='body-container'>
